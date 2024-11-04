@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styles des bulles */
+.bulle1, .bulle2 {
+    color: #fff;
+    padding: 20px;
+    border-radius: 50% / 50%;
+    text-align: center;
+    width: 250px;
+    height: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bulle1 {
+    background: linear-gradient(0deg, #2A19CB, #0AA6D1);
+    rotate: -25deg;
+    margin-top: 300px;
+}
+
+.bulle2 {
+    background: linear-gradient(180deg, #F1A7E7, #ED25D2);
+    rotate: 25deg;
+    margin-bottom: 300px;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+.dropdown-menu {
+    display: none;
+    background: linear-gradient(90deg, #0AA6D1, #ED25D2);
+    border: none;
+    width: 250px; /* Largeur ajustée pour un menu plus large */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
+    z-index: 0;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #0AA6D1, #ED25D2);
+    position: relative;
+    min-height: 100px;
+    transition: height 0.3s ease;
+    overflow: visible;
+    z-index: 1;
+} 
+
+/* Style des liens principaux de la navbar */
+.navbar .nav-link {
+    color: #fff;
+    font-size: 1rem;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+/* Style du menu déroulant */
+.dropdown-menu {
+    display: none;
+    background: linear-gradient(90deg, #0AA6D1, #ED25D2);
+    border: none;
+    width: 250px; /* Largeur ajustée pour un menu plus large */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, width 0.3s ease;
+    z-index: 0;
+}
+
+/* Couleur des liens au survol (navbar et menu déroulant) */
+.navbar .nav-link:hover, .dropdown-item:hover {
+    background-color: transparent;
+    color: #fff;
+}
+
+/* Style des liens dans le menu déroulant */
+.dropdown-menu .dropdown-item {
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+@media screen and (min-width: 992px) {
+    /* Affichage du menu déroulant au survol */
+    .navbar-nav .dropdown:hover > .dropdown-menu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    } 
+
+    .navbar a h4 {
+        font-size: 1.5vw;
+    }
+
+    /* Style de l'espacement entre les éléments de la navbar */
+    .nav-space-around {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    /* Agrandissement des liens principaux de la navbar au survol */
+    .navbar .nav-item:hover > .nav-link {
+        transform: scale(1.2);
+        font-size: 1.2rem;
+    }
+    /* Agrandissement des liens du menu déroulant au survol */
+    .dropdown-menu .dropdown-item:hover {
+        transform: scale(1.1);
+        font-size: 1.1rem;
+    }
+}
+
+/* Background personnalisé avec toques de chef */
+.background-custom::before {
+    top: 0;
+    left: 0;
+    transform: translate(-50px, -50px);
+    background-repeat: repeat;
+}
+.background-custom {
+    background: linear-gradient(135deg, #0AA6D1 50%, #ED25D2 50%);
+    position: relative;
+    overflow: hidden;
+    z-index: -1;
+}
+/* Toques de chef en pseudo-éléments */
+.background-custom::before,
+.background-custom::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2c-3.136 0-5.693 2.215-6.22 5.172-1.754.48-3.038 2.064-3.038 3.828 0 2.209 1.791 4 4 4 .628 0 1.222-.152 1.751-.404l-.977 3.908c-.066.263.013.539.204.739.192.201.473.315.761.315h8.498c.289 0 .569-.115.761-.316.191-.199.27-.476.204-.738l-.977-3.908c.529.251 1.123.403 1.751.403 2.209 0 4-1.791 4-4 0-1.764-1.284-3.348-3.038-3.828-.526-2.957-3.084-5.172-6.22-5.172zm2.95 17h-5.9l.641-2.563c.148.038.296.074.449.101.472.081.95.114 1.424.114s.952-.033 1.424-.114c.153-.027.301-.064.449-.101l.641 2.563z"/></svg>');
+    background-size: 300px 300px;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.background-custom::after {
+    top: 0;
+    right: 0;
+    transform: translate(50px, 50px);
+    background-repeat: repeat;
+}
+
+/* Style des images */
+.img {
+    max-width: 100%;
+    height: auto;
+}
+
+.tw {
+    color: #fff;
+}
+
+.tw li a {
+    color: #fff;
+}
+
+.bg-gradiant {
+    background: linear-gradient(90deg, #0AA6D1, #ED25D2);
+}
+
+/* Style du footer */
+footer {
+    background: linear-gradient(90deg, #0AA6D1, #ED25D2);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
