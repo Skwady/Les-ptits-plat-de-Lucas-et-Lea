@@ -34,7 +34,7 @@ class LoginModel extends Model
     public function search($email)
     {
         return $this->req(
-            "SELECT u.id, u.name, u.firstname, u.password, u.email, r.role 
+            "SELECT u.id, u.name, u.firstname, u.password, u.email, u.is_confirmed, u.id_role, r.role 
              FROM Users u 
              JOIN Role r ON u.id_role = r.id 
              WHERE u.email = :email",

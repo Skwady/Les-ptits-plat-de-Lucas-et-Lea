@@ -40,7 +40,7 @@ class LoginController extends Controller
         }
 
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-        $password = trim($_POST['password']);
+        $password = $_POST['password'];
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             http_response_code(400);
@@ -52,7 +52,7 @@ class LoginController extends Controller
         $user = $LoginModel->search($email);
 
         // Vérifier si l'utilisateur est confirmé
-        if ($user && !$user->is_confirmed) {
+        if ($user && $user->is_confirmed == '0') {
             http_response_code(403);
             echo json_encode(["status" => "error", "message" => "Veuillez confirmer votre adresse email avant de vous connecter."]);
             exit();
@@ -63,14 +63,13 @@ class LoginController extends Controller
             $_SESSION['name'] = $user->name;
             $_SESSION['firstname'] = $user->firstname;
             $_SESSION['email'] = $user->email;
-            $_SESSION['role'] = $user->id_role;
+            $_SESSION['role'] = $user->role;
 
             http_response_code(200);
             echo json_encode(["status" => "success", "redirect" => "/"]);
         } else {
-            $message = $user ? "Mot de passe incorrect." : "Utilisateur non trouvé.";
             http_response_code(401);
-            echo json_encode(["status" => "error", "message" => $message]);
+            echo json_encode(["status" => "error", "message" => "Email ou Mot de passe incorrect."]);
         }
         exit();
     }
