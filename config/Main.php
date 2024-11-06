@@ -16,64 +16,55 @@ class Main
      */
     public function start()
     {
-        // Démarrer la session
         session_start();
 
-        // Générer un jeton CSRF s'il n'existe pas déjà
         if (empty($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
-        // Récupérer l'URI et supprimer le slash final si nécessaire
         $uri = $_SERVER['REQUEST_URI'];
 
         if (!empty($uri) && $uri != '/' && $uri[-1] === '/') {
             $uri = substr($uri, 0, -1);
-
-            // Retourner une réponse JSON pour la redirection
             echo json_encode(['redirect_url' => $uri]);
             exit();
         }
 
-        // Vérification du jeton CSRF et nettoyage des données POST si la requête est un POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $csrfToken = $_POST['csrf_token'] ?? '';
             $this->checkCsrfToken($csrfToken);
-
-            // Nettoyer les données POST
             $_POST = $this->sanitizeFormData($_POST);
         }
 
         // Extraire les paramètres de l'URL
         $params = isset($_GET['p']) ? explode('/', filter_var($_GET['p'], FILTER_SANITIZE_URL)) : [];
 
-        // Vérifier si un contrôleur est spécifié
+        // Vérifier si on est dans login/confirm avec un token
+        if (isset($params[0]) && $params[0] === 'login' && isset($params[1]) && $params[1] === 'confirm' && isset($params[2])) {
+            $token = $params[2]; // Le token est maintenant dans $params[2]
+            $controller = new \App\controllers\LoginController();
+            $controller->confirm($token); // Passe le token en argument
+            return;
+        }
+
         if (isset($params[0]) && $params[0] != '') {
-            // Construire le nom du contrôleur
             $controllerName = '\\App\\controllers\\' . ucfirst(array_shift($params)) . 'Controller';
 
-            // Vérifier si le contrôleur existe
             if (class_exists($controllerName)) {
                 $controller = new $controllerName();
             } else {
-                // Retourner une erreur 404 si le contrôleur n'existe pas
                 $this->error404("Le contrôleur '$controllerName' n'existe pas.");
                 return;
             }
 
-            // Récupérer l'action du contrôleur (méthode)
             $action = (isset($params[0])) ? array_shift($params) : 'index';
 
-            // Vérifier si l'action existe dans le contrôleur
             if (method_exists($controller, $action)) {
-                // Appeler l'action avec les paramètres restants
                 call_user_func_array([$controller, $action], $params);
             } else {
-                // Retourner une erreur 404 si l'action n'existe pas
                 $this->error404("L'action '$action' n'existe pas dans le contrôleur '$controllerName'.");
             }
         } else {
-            // Utiliser le contrôleur et l'action par défaut si aucun paramètre n'est fourni
             $controller = new MainController();
             $controller->index();
         }

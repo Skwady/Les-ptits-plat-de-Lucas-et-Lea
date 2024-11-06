@@ -11,15 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/default.css">
     <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
-    <link href="<?php if (isset($link)) {
-                    echo $link;
-                } ?>" rel="stylesheet">
-    <link href="<?php if (isset($links)) {
-                    echo $links;
-                } ?>" rel="stylesheet">
-    <title><?php if (isset($title)) {
-                echo $title;
-            } ?></title>
+    <link rel="stylesheet" href="/assets/css/<?php if (isset($link)) {echo $link;} ?>.css">
+    <title><?php if (isset($title)) {echo $title;} ?></title>
 </head>
 
 <body>
@@ -94,7 +87,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/contact">
                             <h4>Contact</h4>
                         </a>
                     </li>
@@ -118,7 +111,7 @@
         </div>
     </nav>
 
-    <main class="background-custom">
+    <main>
         <?= $contenu ?>
     </main>
 
@@ -126,9 +119,7 @@
         <h3 class="text-center">&copy Copyright</h3>
     </footer>
 
-    <script src="<?php if (isset($script)) {
-                        echo $script;
-                    } ?>"></script>
+    <script src="<?php if (isset($script)) {echo '/assets/js/'.$script.'.js';} ?>"></script>
     <script src="/assets/js/fetchPost.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
