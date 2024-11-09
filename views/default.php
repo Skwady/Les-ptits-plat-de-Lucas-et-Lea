@@ -94,8 +94,8 @@
                     </li>
                     <?php if(isset($_SESSION['id'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout" onclick="return confirm('Êtes-vous sûr de vouloir vous déconnecter ?');">
-                            <h4>Déconnexion</h4>
+                        <a class="nav-link" href="/profile/viewProfile">
+                            <h4>Profile</h4>
                         </a>
                     </li>
                     

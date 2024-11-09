@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-class LoginModel extends Model
+class UsersModel extends Model
 {
     protected $id;
     protected $name;

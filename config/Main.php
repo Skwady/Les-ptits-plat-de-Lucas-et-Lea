@@ -2,6 +2,7 @@
 
 namespace App\config;
 
+use App\controllers\LoginController;
 use App\controllers\MainController;
 
 class Main
@@ -36,14 +37,12 @@ class Main
             $_POST = $this->sanitizeFormData($_POST);
         }
 
-        // Extraire les paramètres de l'URL
         $params = isset($_GET['p']) ? explode('/', filter_var($_GET['p'], FILTER_SANITIZE_URL)) : [];
 
-        // Vérifier si on est dans login/confirm avec un token
         if (isset($params[0]) && $params[0] === 'login' && isset($params[1]) && $params[1] === 'confirm' && isset($params[2])) {
-            $token = $params[2]; // Le token est maintenant dans $params[2]
-            $controller = new \App\controllers\LoginController();
-            $controller->confirm($token); // Passe le token en argument
+            $token = $params[2];
+            $controller = new LoginController();
+            $controller->confirm($token); 
             return;
         }
 

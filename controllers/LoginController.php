@@ -2,8 +2,7 @@
 
 namespace App\controllers;
 
-use App\models\LoginModel;
-use GuzzleHttp\Psr7\Request;
+use App\models\UsersModel;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController extends Controller
@@ -48,7 +47,7 @@ class LoginController extends Controller
             exit();
         }
 
-        $LoginModel = new LoginModel();
+        $LoginModel = new UsersModel();
         $user = $LoginModel->search($email);
 
         // Vérifier si l'utilisateur est confirmé
@@ -104,7 +103,7 @@ class LoginController extends Controller
                 $token = bin2hex(random_bytes(32));
 
                 // Hydrater et enregistrer l'utilisateur avec le token
-                $user = (new LoginModel())->hydrate([
+                $user = (new UsersModel())->hydrate([
                     'name' => $name,
                     'firstname' => $firstname,
                     'email' => $email,
@@ -169,7 +168,7 @@ class LoginController extends Controller
     public function confirm($token = null)
     {
         if ($token) {
-            $LoginModel = new LoginModel();
+            $LoginModel = new UsersModel();
             $user = $LoginModel->findByToken($token);
 
             if ($user) {
