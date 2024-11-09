@@ -30,6 +30,7 @@ class Main
             echo json_encode(['redirect_url' => $uri]);
             exit();
         }
+        
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $csrfToken = $_POST['csrf_token'] ?? '';
@@ -66,6 +67,17 @@ class Main
         } else {
             $controller = new MainController();
             $controller->index();
+        }
+
+        if (method_exists($controller, $action)) {
+            $reflection = new \ReflectionMethod($controller, $action);
+            if ($reflection->isPublic()) {
+                call_user_func_array([$controller, $action], $params);
+            } else {
+                $this->error404("L'action '$action' n'est pas accessible.");
+            }
+        } else {
+            $this->error404("L'action '$action' n'existe pas dans le contrôleur '$controllerName'.");
         }
     }
 
