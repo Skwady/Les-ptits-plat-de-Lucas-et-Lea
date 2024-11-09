@@ -2,7 +2,7 @@
 $title = 'Ajouter une Recette';
 ?>
 
-<form method="post" action="process_recipe.php" enctype="multipart/form-data" class="container mt-4">
+<form method="post" action="/Recipes/addRecipe" enctype="multipart/form-data" class="container mt-4">
     <div class="mb-3">
         <label for="title" class="form-label">Titre :</label>
         <input type="text" class="form-control" id="title" name="title" maxlength="255" required>
@@ -48,10 +48,11 @@ $title = 'Ajouter une Recette';
     </div>
 
     <div class="mb-3">
-        <label for="photo" class="form-label">Photo :</label>
-        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+        <label for="image" class="form-label">Photo :</label>
+        <input type="file" class="form-control" id="image" name="image" accept="image/*">
     </div>
 
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <button type="submit" class="btn btn-primary">Soumettre la recette</button>
 </form>
+<div id="error-message" class="alert alert-danger" role="alert"></div>

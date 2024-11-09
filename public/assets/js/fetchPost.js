@@ -21,7 +21,10 @@ document.querySelectorAll('form').forEach(function(form) {
             const errorMessageContainer = document.getElementById('error-message');
             errorMessageContainer.style.display = 'none';
 
+            console.log('Réponse reçue:', jsonResponse);
             form.reset();
+            console.log('Formulaire réinitialisé');
+            
             if (jsonResponse.redirect) {
                 window.location.href = jsonResponse.redirect; // Redirection si demandée
             }

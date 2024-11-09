@@ -1,28 +1,44 @@
 <!-- recipes/recipes.php -->
-<?php $title = 'Liste des Recettes'; ?>
+<?php
+$link = "recipe";
+$title = 'Liste des Recettes';
+?>
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Recettes</h2>
-    <div class="row">
-        <?php foreach ($recipes as $recipe): ?>
-            <div class="col-md-4">
+<div class="container mt-5 mb-5">
+    <?php foreach ($recipes as $recipe): ?>
+        <div>
+            <h3 class="text-center mb-3 title">
+                <?= $recipe->title ? $recipe->title : 'Recette sans titre' ?>
+            </h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
                 <div class="card mb-4">
-                    <?php if ($recipe->photo): ?>
-                        <img src="/uploads/<?= $recipe->photo ?>" class="card-img-top" alt="<?= $recipe->title ?>">
-                    <?php endif; ?>
                     <div class="card-body">
-                        <?php if ($recipe->title): ?>
-                            <h5 class="card-title"><?= $recipe->title ?></h5>
-                        <?php endif; ?>
-                        
-                        <?php if ($recipe->type): ?>
-                            <p class="card-text">Type: <?= $recipe->type ?></p>
-                        <?php endif; ?>
-                        
-                        <a href="/recipes/viewRecipe/<?= $recipe->id ?>" class="btn btn-primary">Voir la recette</a>
+                        <h5>• Nombre de portions : <?= $recipe->servings ?></h5>
+                        <h5>• Niveau de difficulté : <?= $recipe->difficulty ?></h5>
+                        <h5>• Temps de préparation : <?= $recipe->prep_time ?> minutes</h5>
+                        <h5>• Temps de cuisson : <?= $recipe->cook_time ? $recipe->cook_time . ' minutes' : 'Aucun' ?></h5>
+                        <h5>Ingrédients :</h5>
+                        <p><?= nl2br($recipe->ingredients) ?></p>
+                        <h5>Instructions :</h5>
+                        <p><?= nl2br($recipe->instructions) ?></p>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
+            <div class="col-md-4">
+                <div class="img">
+                    <img src="<?= $recipe->slug ?>" alt="Image de la recette" class="mb-4">
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <button class="btn">Like</button>
+                    <button class="btn">Commentaire</button>
+                    <button class="btn">Partager</button>
+                </div>
+            </div>
+            <div class="d-flex flex-end">
+                <a href="/recipes/updateRecipe/<?= $recipe->id ?>" class="btn">modifier</a>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>

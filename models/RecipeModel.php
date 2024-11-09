@@ -2,20 +2,18 @@
 
 namespace App\models;
 
-class RecipeModel extends model
+class RecipeModel extends Model
 {
     protected $id;
     protected $title;
     protected $type;
     protected $servings;
-    protected $dificulty;
+    protected $difficulty;
     protected $prep_time;
     protected $cook_time;
     protected $ingredients;
     protected $instructions;
-    protected $photo;
-    protected $created_at;
-    protected $updated_at;
+    protected $slug;
 
     public function __construct()
     {
@@ -85,15 +83,15 @@ class RecipeModel extends model
     /**
      * Get the value of dificulty
      */
-    public function getDificulty() {
-        return $this->dificulty;
+    public function getDifficulty() {
+        return $this->difficulty;
     }
 
     /**
      * Set the value of dificulty
      */
-    public function setDificulty($dificulty): self {
-        $this->dificulty = $dificulty;
+    public function setDifficulty($dificulty): self {
+        $this->difficulty = $dificulty;
         return $this;
     }
 
@@ -160,45 +158,15 @@ class RecipeModel extends model
     /**
      * Get the value of photo
      */
-    public function getPhoto() {
-        return $this->photo;
+    public function getSlug() {
+        return $this->slug;
     }
 
     /**
      * Set the value of photo
      */
-    public function setPhoto($photo): self {
-        $this->photo = $photo;
-        return $this;
-    }
-
-    /**
-     * Get the value of created_at
-     */
-    public function getCreated_At() {
-        return $this->created_at;
-    }
-
-    /**
-     * Set the value of created_at
-     */
-    public function setCreated_At($created_at): self {
-        $this->created_at = $created_at;
-        return $this;
-    }
-
-    /**
-     * Get the value of updated_at
-     */
-    public function getUpdated_At() {
-        return $this->updated_at;
-    }
-
-    /**
-     * Set the value of updated_at
-     */
-    public function setUpdated_At($updated_at): self {
-        $this->updated_at = $updated_at;
+    public function setSlug($slug): self {
+        $this->slug = $slug;
         return $this;
     }
 }

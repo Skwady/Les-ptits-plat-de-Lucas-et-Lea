@@ -35,8 +35,8 @@ class UsersModel extends Model
     {
         return $this->req(
             "SELECT u.id, u.name, u.firstname, u.password, u.email, u.is_confirmed, u.id_role, r.role 
-             FROM Users u 
-             JOIN Role r ON u.id_role = r.id 
+             FROM ". $this->table ." u
+             JOIN role r ON u.id_role = r.id 
              WHERE u.email = :email",
             ['email' => $email]
         )->fetch();

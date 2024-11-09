@@ -12,60 +12,56 @@ class RecipesController extends Controller
     {
         $recipeModel = new RecipeModel();
         $recipes = $recipeModel->selectAll();
-        foreach ($recipes as &$recipe) {
-            if (isset($recipe['photo'])) {
-                $recipe['photo'] = $recipe['photo']; // Adjust the URL if needed for display
-            }
-        }
-        $this->render('recipes/recipes', ['recipes' => $recipes]);
-    }
 
-    public function viewRecipe($recipeId)
-    {
-        $recipeModel = new RecipeModel();
-        $recipe = $recipeModel->select($recipeId);
-        if ($recipe && isset($recipe['photo'])) {
-            $recipe['photo'] = $recipe['photo']; // Adjust the URL if needed for display
-        }
-        $this->render('recipes/view', ['recipe' => $recipe]);
+        $this->render('recipes/recipes', ['recipes' => $recipes]);
     }
 
     public function addRecipe()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $recipeModel = new RecipeModel();
-            $photoUrl = null;
+            $cloudinaryService = new CloudinaryService();
 
-            if (isset($_FILES['photo']) && $_FILES['photo']['tmp_name']) {
-                $cloudinary = new CloudinaryService();
-                $uploadResult = $cloudinary->uploadFile(
-                    $_FILES['photo']['tmp_name'],
-                    [
-                        'folder' => 'recipes',
-                        'transformation' => [
-                            'resize' => new Resize('scale', 800, 600)
-                        ]
-                    ]
-                );
-                $photoUrl = $uploadResult['secure_url'];
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $image = $_FILES['image'];
+
+                // Check file type
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+                if (in_array($image['type'], $allowedTypes)) {
+                    // Upload the image to Cloudinary
+                    $fileUrl = $cloudinaryService->uploadFile($image['tmp_name']);
+                    if ($fileUrl) {
+                        // Use the image URL as the slug
+                        $slug = $fileUrl;
+
+                        $recipeModel->hydrate([
+                            'title' => $_POST['title'],
+                            'type' => $_POST['type'],
+                            'servings' => $_POST['servings'],
+                            'difficulty' => $_POST['difficulty'],
+                            'prep_time' => $_POST['prep_time'],
+                            'cook_time' => $_POST['cook_time'],
+                            'ingredients' => $_POST['ingredients'],
+                            'instructions' => $_POST['instructions'],
+                            'slug' => $slug
+                        ])->create();
+
+                        // Retour JSON
+                        echo json_encode(['success' => true, 'redirect' => '/recipes/addRecipe']);
+                        exit();
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement de l\'image.']);
+                        exit();
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Le type de fichier n\'est pas autorisé.']);
+                    exit();
+                }
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'image.']);
+                exit();
             }
-
-            $recipeModel->hydrate([
-                'title' => $_POST['title'],
-                'type' => $_POST['type'],
-                'servings' => $_POST['servings'],
-                'difficulty' => $_POST['difficulty'],
-                'prep_time' => $_POST['prep_time'],
-                'cook_time' => $_POST['cook_time'],
-                'ingredients' => $_POST['ingredients'],
-                'instructions' => $_POST['instructions'],
-                'photo' => $photoUrl
-            ])->create();
-
-            header("Location: /recipes");
-            exit();
         }
-
         $this->render('recipes/add');
     }
 
@@ -86,7 +82,7 @@ class RecipesController extends Controller
                         ]
                     ]
                 );
-                $photoUrl = $uploadResult['secure_url'];
+                $photoUrl = $uploadResult['secure_url'] ?? null;
             }
 
             $recipeModel->hydrate([
@@ -101,7 +97,7 @@ class RecipesController extends Controller
                 'photo' => $photoUrl
             ])->update($recipeId);
 
-            header("Location: /recipes/view/" . $recipeId);
+            echo json_encode(["status" => "success", "redirect" => "/recipes/listRecipes"]);
             exit();
         }
 
@@ -113,7 +109,7 @@ class RecipesController extends Controller
         $recipeModel = new RecipeModel();
         $recipe = $recipeModel->select($recipeId);
 
-        if ($recipe && $recipe['photo']) {
+        if ($recipe && !empty($recipe['photo'])) {
             $publicId = pathinfo($recipe['photo'], PATHINFO_FILENAME);
             $cloudinary = new CloudinaryService();
             $cloudinary->deleteFile($publicId);

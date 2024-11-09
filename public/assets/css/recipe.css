@@ -1,0 +1,24 @@
+/* Styles généraux pour le conteneur */
+.title {
+    font-size: 3em;
+    margin-bottom: 1em;
+    background: linear-gradient(135deg, #ED25D2, #0AA6D1);
+    color: white;
+}
+
+.img img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+}
+
+.card-body {
+    background: linear-gradient(135deg, #ED25D2, #0AA6D1);
+    color: white;
+}
+
+.btn {
+    background: linear-gradient(135deg, #ED25D2, #0AA6D1);
+    color: white;
+    width: 120px;
+}

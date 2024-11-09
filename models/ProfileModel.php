@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-class ProfileModel extends model
+class ProfileModel extends Model
 {
     protected $id;
     protected $bio;

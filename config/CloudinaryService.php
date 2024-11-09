@@ -34,7 +34,7 @@ class CloudinaryService
     {
         try {
             $result = $this->cloudinary->uploadApi()->upload($file, [
-                "folder" => "Les_p'tits_plats/"
+                "folder" => "Les_ptits_plats/"
             ]);
             return $result['secure_url'];
         } catch (\Exception $e) {
