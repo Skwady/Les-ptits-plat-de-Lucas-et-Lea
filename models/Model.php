@@ -43,7 +43,7 @@ class Model extends Db
      *
      * Executes a SELECT statement to get all rows from the table.
      *
-     * @return array|false Returns an array of all rows as associative arrays, or false on failure.
+     * @return object|false Returns an object of all rows as associative arrays, or false on failure.
      */
     public function selectAll()
     {
@@ -57,11 +57,34 @@ class Model extends Db
      * Executes a SELECT statement to find a specific row by its ID.
      *
      * @param integer $id The ID of the entry to retrieve.
-     * @return array|false Returns an associative array representing the row, or false on failure.
+     * @return object|false Returns an associative object representing the row, or false on failure.
      */
     public function select(int $id)
     {
         return $this->req("SELECT * FROM " . $this->table . " WHERE id = ?", [$id])->fetch();
+    }
+
+    /**
+     * Retrieves an entry by its column value.
+     * 
+     * Executes a SELECT statement to find a specific row by a column value.
+     *
+     * @param object $criteres An associative array of column names and values to search for.
+     * @return object|false Returns an associative object representing the row, or false on failure.
+     */
+    public function selectBy(array $criteres)
+    {
+        $champs = [];
+        $valeurs = [];
+
+        foreach ($criteres as $champ => $valeur) {
+            $champs[] = "$champ = ?";
+            $valeurs[] = $valeur;
+        }
+
+        $listeChamps = implode(' AND ', $champs);
+
+        return $this->req("SELECT * FROM " . $this->table . " WHERE " . $listeChamps, $valeurs)->fetchAll();
     }
 
     /**
@@ -109,7 +132,7 @@ class Model extends Db
      * Takes an associative array of data and uses setter methods to populate
      * the object's properties.
      *
-     * @param array $data The data to hydrate the object with.
+     * @param object $data The data to hydrate the object with.
      * @return self Returns the current instance of the object for method chaining.
      */
     public function hydrate($data)

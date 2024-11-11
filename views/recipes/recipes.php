@@ -35,6 +35,22 @@ $title = 'Liste des Recettes';
                     <button class="btn">Commentaire</button>
                     <button class="btn">Partager</button>
                 </div>
+                <div>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p><?= $recipe->content ? $recipe->content : 'pas de commentaire' ?></p>
+                        </div>
+                    </div>
+                    <?php if($_SESSION['id']): ?>
+                    <form action="/recipes/comment" method="POST">
+                        <input type="hidden" name="recipe_id" value="<?= $recipe->id ?>">
+                        <input type="hidden" name="user_id" value="<?= $_SESSION['id'] ?>">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                        <input type="text" name="comments" placeholder="Votre commentaire" class="form-control mt-3">
+                        <button class="btn">Envoyer</button>
+                    </form>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="d-flex flex-end">
                 <a href="/recipes/updateRecipe/<?= $recipe->id ?>" class="btn">modifier</a>

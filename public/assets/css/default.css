@@ -4,6 +4,16 @@
     box-sizing: border-box;
 }
 
+.tw {
+    color: #fff;
+}
+
+.tw-b {
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
 .bg-gradiant {
     background: linear-gradient(90deg, #0AA6D1, #ED25D2);
 }

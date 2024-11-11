@@ -59,4 +59,11 @@ class CloudinaryService
             return false;
         }
     }
+
+    public function getPublicIdFromUrl($url)
+    {
+        $path_parts = pathinfo($url);
+        return substr($path_parts['basename'], 0, strpos($path_parts['basename'], '.'));
+    }
+
 }

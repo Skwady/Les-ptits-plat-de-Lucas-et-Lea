@@ -14,10 +14,22 @@ class RecipeModel extends Model
     protected $ingredients;
     protected $instructions;
     protected $slug;
+    protected $type_id;
 
     public function __construct()
     {
         $this->table = 'recipes';
+    }
+
+    public function selectRecipeByType($type)
+    {
+        $sql = 'SELECT r.*, c.content, t.type
+                FROM ' . $this->table . ' r 
+                LEFT JOIN comments c ON c.recipe_id = r.id 
+                LEFT JOIN type t ON t.id = r.type_id 
+                WHERE r.type_id = :type';
+        
+        return $this->req($sql, ['type' => $type])->fetchAll();
     }
 
     /**
@@ -167,6 +179,21 @@ class RecipeModel extends Model
      */
     public function setSlug($slug): self {
         $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * Get the value of type_id
+     */
+    public function getType_Id() {
+        return $this->type_id;
+    }
+
+    /**
+     * Set the value of type_id
+     */
+    public function setType_Id($type_id): self {
+        $this->type_id = $type_id;
         return $this;
     }
 }

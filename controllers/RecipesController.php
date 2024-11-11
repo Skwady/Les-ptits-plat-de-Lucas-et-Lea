@@ -4,16 +4,17 @@ namespace App\controllers;
 
 use App\config\CloudinaryService;
 use App\models\RecipeModel;
+use App\models\TypeModel;
 use Cloudinary\Transformation\Resize;
 
 class RecipesController extends Controller
 {
-    public function listRecipes()
+    public function listRecipes($type)
     {
         $recipeModel = new RecipeModel();
-        $recipes = $recipeModel->selectAll();
+        $recipes = $recipeModel->selectRecipeByType($type);
 
-        $this->render('recipes/recipes', ['recipes' => $recipes]);
+        $this->render('recipes/recipes', ['recipes' => $recipes, 'type' => $type]);
     }
 
     public function addRecipe()
@@ -25,18 +26,19 @@ class RecipesController extends Controller
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $image = $_FILES['image'];
 
-                // Check file type
+                // Vérifier le type de fichier
                 $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
                 if (in_array($image['type'], $allowedTypes)) {
-                    // Upload the image to Cloudinary
+                    // Télécharger l'image sur Cloudinary
                     $fileUrl = $cloudinaryService->uploadFile($image['tmp_name']);
                     if ($fileUrl) {
-                        // Use the image URL as the slug
+                        // Utiliser l'URL de l'image comme slug
                         $slug = $fileUrl;
 
+                        // Créer une nouvelle recette avec les données du formulaire
                         $recipeModel->hydrate([
                             'title' => $_POST['title'],
-                            'type' => $_POST['type'],
+                            'type_id' => $_POST['type_id'], // Utiliser `type_id` au lieu de `type`
                             'servings' => $_POST['servings'],
                             'difficulty' => $_POST['difficulty'],
                             'prep_time' => $_POST['prep_time'],
@@ -62,46 +64,98 @@ class RecipesController extends Controller
                 exit();
             }
         }
-        $this->render('recipes/add');
+
+        // Charger les types pour le champ de sélection
+        $typeModel = new TypeModel();
+        $types = $typeModel->selectAll();
+
+        $this->render('recipes/add', ['types' => $types]);
     }
 
     public function updateRecipe($recipeId)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $recipeModel = new RecipeModel();
-            $photoUrl = null;
+            $cloudinaryService = new CloudinaryService();
 
-            if (isset($_FILES['photo']) && $_FILES['photo']['tmp_name']) {
-                $cloudinary = new CloudinaryService();
-                $uploadResult = $cloudinary->uploadFile(
-                    $_FILES['photo']['tmp_name'],
-                    [
-                        'folder' => 'recipes',
-                        'transformation' => [
-                            'resize' => new Resize('scale', 800, 600)
-                        ]
-                    ]
-                );
-                $photoUrl = $uploadResult['secure_url'] ?? null;
+            // Récupérer la recette existante
+            $recipe = $recipeModel->select($recipeId);
+
+            // Vérifier si une nouvelle image est envoyée
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $image = $_FILES['image'];
+
+                // Vérifier le type de fichier
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+                if (in_array($image['type'], $allowedTypes)) {
+
+                    // Supprimer l'ancienne image de Cloudinary si elle existe
+                    if ($recipe->slug) {
+                        // Extraire le public_id de l'URL de l'ancienne image
+                        $oldImageUrl = $recipe->slug; // L'URL de l'ancienne image
+                        $publicId = $cloudinaryService->getPublicIdFromUrl($oldImageUrl); // Méthode qui extrait le public_id
+
+                        if ($publicId) {
+                            // Supprimer l'image depuis Cloudinary
+                            $cloudinaryService->deleteFile($publicId);
+                        }
+                    }
+
+                    // Télécharger la nouvelle image sur Cloudinary
+                    $fileUrl = $cloudinaryService->uploadFile($image['tmp_name']);
+                    if ($fileUrl) {
+                        // Utiliser l'URL de l'image comme slug
+                        $slug = $fileUrl;
+
+                        // Mettre à jour la recette avec la nouvelle image
+                        $recipeModel->hydrate([
+                            'title' => $_POST['title'],
+                            'type' => $_POST['type'],
+                            'servings' => $_POST['servings'],
+                            'difficulty' => $_POST['difficulty'],
+                            'prep_time' => $_POST['prep_time'],
+                            'cook_time' => $_POST['cook_time'],
+                            'ingredients' => $_POST['ingredients'],
+                            'instructions' => $_POST['instructions'],
+                            'slug' => $slug, // Nouvelle image
+                            'recipes_id' => $_POST['recipes_id']
+                        ])->update($recipeId);
+
+                        echo json_encode(['success' => true, 'redirect' => '/recipes/edit/' . $recipeId]);
+                        exit();
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement de l\'image.']);
+                        exit();
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Le type de fichier n\'est pas autorisé.']);
+                    exit();
+                }
+            } else {
+                // Si pas de nouvelle image, simplement mettre à jour les autres champs
+                $recipeModel->hydrate([
+                    'title' => $_POST['title'],
+                    'type' => $_POST['type'],
+                    'servings' => $_POST['servings'],
+                    'difficulty' => $_POST['difficulty'],
+                    'prep_time' => $_POST['prep_time'],
+                    'cook_time' => $_POST['cook_time'],
+                    'ingredients' => $_POST['ingredients'],
+                    'instructions' => $_POST['instructions'],
+                    'recipes_id' => $_POST['recipes_id']
+                ])->update($recipeId);
+
+                echo json_encode(['success' => true, 'redirect' => '/recipes/edit/' . $recipeId]);
+                exit();
             }
-
-            $recipeModel->hydrate([
-                'title' => $_POST['title'],
-                'type' => $_POST['type'],
-                'servings' => $_POST['servings'],
-                'difficulty' => $_POST['difficulty'],
-                'prep_time' => $_POST['prep_time'],
-                'cook_time' => $_POST['cook_time'],
-                'ingredients' => $_POST['ingredients'],
-                'instructions' => $_POST['instructions'],
-                'photo' => $photoUrl
-            ])->update($recipeId);
-
-            echo json_encode(["status" => "success", "redirect" => "/recipes/listRecipes"]);
-            exit();
         }
 
-        $this->render('recipes/edit', ['recipeId' => $recipeId]);
+        $recipeModel = new RecipeModel();
+        $typeModel = new TypeModel();
+        $types = $typeModel->selectAll();
+        $recipes = $recipeModel->selectAll();
+
+        $this->render('recipes/edit', ['recipes' => $recipes, 'types' => $types, 'recipeId' => $recipeId]);
     }
 
     public function deleteRecipe($recipeId)
@@ -109,8 +163,8 @@ class RecipesController extends Controller
         $recipeModel = new RecipeModel();
         $recipe = $recipeModel->select($recipeId);
 
-        if ($recipe && !empty($recipe['photo'])) {
-            $publicId = pathinfo($recipe['photo'], PATHINFO_FILENAME);
+        if ($recipe && !empty($recipe->slug)) {
+            $publicId = pathinfo($recipe->slug, PATHINFO_FILENAME);
             $cloudinary = new CloudinaryService();
             $cloudinary->deleteFile($publicId);
         }

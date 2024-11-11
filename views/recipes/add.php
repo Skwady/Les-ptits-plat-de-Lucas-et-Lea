@@ -2,15 +2,19 @@
 $title = 'Ajouter une Recette';
 ?>
 
-<form method="post" action="/Recipes/addRecipe" enctype="multipart/form-data" class="container mt-4">
-    <div class="mb-3">
+<form method="post" action="/Recipes/addRecipe" enctype="multipart/form-data" class="container mt-4 mb-4 bg-gradiant tw-b">
+    <div class="mb-3 pt-3">
         <label for="title" class="form-label">Titre :</label>
         <input type="text" class="form-control" id="title" name="title" maxlength="255" required>
     </div>
 
     <div class="mb-3">
-        <label for="type" class="form-label">Type :</label>
-        <input type="text" class="form-control" id="type" name="type" maxlength="50" required>
+        <label for="type_id" class="form-label">Type :</label>
+        <select class="form-select" id="type_id" name="type_id" required>
+            <?php foreach ($types as $type) : ?>
+                <option value="<?= $type->id; ?>"><?= $type->type; ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="mb-3">
@@ -53,6 +57,6 @@ $title = 'Ajouter une Recette';
     </div>
 
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-    <button type="submit" class="btn btn-primary">Soumettre la recette</button>
+    <button type="submit" class="btn btn-primary mb-4">Soumettre la recette</button>
 </form>
-<div id="error-message" class="alert alert-danger" role="alert"></div>
+<div id="error-message" class="alert alert-danger mt-4 mb-4" role="alert"></div>
