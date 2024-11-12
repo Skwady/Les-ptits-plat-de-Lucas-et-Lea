@@ -110,14 +110,14 @@
 
                     <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
                         <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" id="recettesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <h4>recette</h4>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="recettesDropdown">
-                            <li><a class="dropdown-item" href="/recipes/addRecipe">Ajouter une recette</a></li>
-                            <li><a class="dropdown-item" href="/recipes/listRecipes">liste des recettes</a></li>
-                        </ul>
-                    </li>
+                            <a class="nav-link" href="#" id="recettesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <h4>recette</h4>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="recettesDropdown">
+                                <li><a class="dropdown-item" href="/recipes/addRecipe">Ajouter une recette</a></li>
+                                <li><a class="dropdown-item" href="/recipes/listRecipes">liste des recettes</a></li>
+                            </ul>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </div>
