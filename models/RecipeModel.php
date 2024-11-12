@@ -14,6 +14,7 @@ class RecipeModel extends Model
     protected $ingredients;
     protected $instructions;
     protected $slug;
+    protected $rest_time;
     protected $type_id;
 
     public function __construct()
@@ -194,6 +195,21 @@ class RecipeModel extends Model
      */
     public function setType_Id($type_id): self {
         $this->type_id = $type_id;
+        return $this;
+    }
+
+    /**
+     * Get the value of rest_time
+     */
+    public function getRest_Time() {
+        return $this->rest_time;
+    }
+
+    /**
+     * Set the value of rest_time
+     */
+    public function setRest_Time($rest_time): self {
+        $this->rest_time = $rest_time;
         return $this;
     }
 }

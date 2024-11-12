@@ -7,7 +7,7 @@ $title = 'Liste des Recettes';
 <div class="container mt-5 mb-5">
     <?php foreach ($recipes as $recipe): ?>
         <div>
-            <h3 class="text-center mb-3 title">
+            <h3 class="text-center mb-3 title py-3">
                 <?= $recipe->title ? $recipe->title : 'Recette sans titre' ?>
             </h3>
         </div>
@@ -17,8 +17,9 @@ $title = 'Liste des Recettes';
                     <div class="card-body">
                         <h5>• Nombre de portions : <?= $recipe->servings ?></h5>
                         <h5>• Niveau de difficulté : <?= $recipe->difficulty ?></h5>
-                        <h5>• Temps de préparation : <?= $recipe->prep_time ?> minutes</h5>
-                        <h5>• Temps de cuisson : <?= $recipe->cook_time ? $recipe->cook_time . ' minutes' : 'Aucun' ?></h5>
+                        <h5>• Temps de préparation : <span data-prep-time="<?= $recipe->prep_time ?>"></span></h5>
+                        <h5>• Temps de cuisson : <span data-cook-time="<?= $recipe->cook_time ?>"></span></h5>
+                        <h5>• Temps de repos : <span data-rest-time="<?= $recipe->rest_time ?>"></span></h5>
                         <h5>Ingrédients :</h5>
                         <p><?= nl2br($recipe->ingredients) ?></p>
                         <h5>Instructions :</h5>
@@ -36,7 +37,7 @@ $title = 'Liste des Recettes';
                     <button class="btn">Partager</button>
                 </div>
                 <div>
-                    <div class="card mt-3">
+                    <div class="card mt-2">
                         <div class="card-body">
                             <p><?= $recipe->content ? $recipe->content : 'pas de commentaire' ?></p>
                         </div>
@@ -52,9 +53,12 @@ $title = 'Liste des Recettes';
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="d-flex flex-end">
-                <a href="/recipes/updateRecipe/<?= $recipe->id ?>" class="btn">modifier</a>
-            </div>
+        </div>
+        <div class="d-flex flex-end gap-3 mb-5">
+            <a href="/recipes/updateRecipe/<?= $recipe->id ?>" class="btn">Modifier</a>
+            <a href="/recipes/deleteRecipe/<?= $recipe->id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
         </div>
     <?php endforeach; ?>
 </div>
+
+<?php $script = 'recipesTime'; ?>

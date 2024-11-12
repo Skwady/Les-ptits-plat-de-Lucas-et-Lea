@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\models\ProfileModel;
 use App\models\UsersModel;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -154,7 +155,7 @@ class LoginController extends Controller
             // Contenu de l'email
             $mail->isHTML(true);
             $mail->Subject = 'Confirmation de votre inscription';
-            $confirmationLink = "http://localhost/login/confirm/" . $token;
+            $confirmationLink = "https://lesptitsplats-ee9a18fc681e.herokuapp.com/login/confirm/" . $token;
             $mail->Body = "Bonjour,<br><br>Merci pour votre inscription. 
                        Veuillez cliquer sur le lien ci-dessous pour confirmer votre adresse email :<br>
                        <a href='$confirmationLink'>Confirmer mon email</a>";
@@ -173,6 +174,10 @@ class LoginController extends Controller
 
             if ($user) {
                 $LoginModel->confirmUser($user->id);
+                $profileModel = new ProfileModel();
+                $profile = $profileModel->hydrate([
+                    'user_id' => $user->id
+                ])->create();
                 echo "Votre compte a été confirmé avec succès !";
             } else {
                 echo "Lien de confirmation invalide ou expiré.";

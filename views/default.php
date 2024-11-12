@@ -30,12 +30,12 @@
                             <h4>Entrées</h4>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="entreesDropdown">
-                            <li><a class="dropdown-item" href="#">Entrées froides</a></li>
-                            <li><a class="dropdown-item" href="#">Entrées chaudes</a></li>
-                            <li><a class="dropdown-item" href="#">Tapas et<br> amuses bouches</a></li>
-                            <li><a class="dropdown-item" href="#">Les verrines</a></li>
-                            <li><a class="dropdown-item" href="#">Les soupes</a></li>
-                            <li><a class="dropdown-item" href="#">Les entrées festives</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/1">Entrées froides</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/2">Entrées chaudes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/3">Tapas et<br> amuses bouches</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/4">Les verrines</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/5">Les soupes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/6">Les entrées festives</a></li>
                         </ul>
                     </li>
                     <!-- Plats -->
@@ -44,13 +44,13 @@
                             <h4>Plats</h4>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="platsDropdown">
-                            <li><a class="dropdown-item" href="#">Les p’tits plats<br> de nos<br> grands-mères</a></li>
-                            <li><a class="dropdown-item" href="#">Cuisine du monde</a></li>
-                            <li><a class="dropdown-item" href="#">Poissons et<br> fruits de mer</a></li>
-                            <li><a class="dropdown-item" href="#">Spécialitées<br> végétariennes</a></li>
-                            <li><a class="dropdown-item" href="#">Les abats</a></li>
-                            <li><a class="dropdown-item" href="#">Riz et pâtes</a></li>
-                            <li><a class="dropdown-item" href="#">Les plats festifs</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/7">Les p’tits plats<br> de nos<br> grands-mères</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/8">Cuisine du monde</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/9">Poissons et<br> fruits de mer</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/10">Spécialitées<br> végétariennes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/11">Les abats</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/12">Riz et pâtes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/13">Les plats festifs</a></li>
                         </ul>
                     </li>
                     <!-- Desserts -->
@@ -59,12 +59,12 @@
                             <h4>Desserts</h4>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dessertsDropdown">
-                            <li><a class="dropdown-item" href="#">Les desserts<br> d’antan</a></li>
-                            <li><a class="dropdown-item" href="#">Les classiques</a></li>
-                            <li><a class="dropdown-item" href="#">Gâteaux et cakes</a></li>
-                            <li><a class="dropdown-item" href="#">Tartes et tartelettes</a></li>
-                            <li><a class="dropdown-item" href="#">P’tits biscuits</a></li>
-                            <li><a class="dropdown-item" href="#">Les desserts festifs</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/14">Les desserts<br> d’antan</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/15">Les classiques</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/16">Gâteaux et cakes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/17">Tartes et tartelettes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/18">P’tits biscuits</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/19">Les desserts festifs</a></li>
                         </ul>
                     </li>
                     <!-- Accompagnements -->
@@ -73,13 +73,13 @@
                             <h4>Accompagnements</h4>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="accompagnementsDropdown">
-                            <li><a class="dropdown-item" href="#">Les gratins</a></li>
-                            <li><a class="dropdown-item" href="#">Les légumes</a></li>
-                            <li><a class="dropdown-item" href="#">Les sauces</a></li>
-                            <li><a class="dropdown-item" href="#">Les pommes de terre</a></li>
-                            <li><a class="dropdown-item" href="#">Polenta et semoule</a></li>
-                            <li><a class="dropdown-item" href="#">Les purées</a></li>
-                            <li><a class="dropdown-item" href="#">Accompagnements festifs</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/20">Les gratins</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/21">Les légumes</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/22">Les sauces</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/23">Les pommes de terre</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/24">Polenta et semoule</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/25">Les purées</a></li>
+                            <li><a class="dropdown-item" href="/recipes/listRecipes/26">Accompagnements festifs</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -95,7 +95,7 @@
                     </li>
                     <?php if(isset($_SESSION['id'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile/viewProfile">
+                        <a class="nav-link" href="/profile/viewProfile/<?= $_SESSION['id'] ?>">
                             <h4>Profile</h4>
                         </a>
                     </li>
@@ -133,6 +133,7 @@
     </footer>
 
     <script src="<?php if (isset($script)) {echo '/assets/js/'.$script.'.js';} ?>"></script>
+    <script src="<?php if (isset($scripts)) {echo '/assets/js/'.$scripts.'.js';} ?>"></script>
     <script src="/assets/js/fetchPost.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

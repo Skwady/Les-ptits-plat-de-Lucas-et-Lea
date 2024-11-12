@@ -19,8 +19,9 @@ class Main
     {
         session_start();
 
+        // Générer le token CSRF si absent de la session
         if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Stocke directement le jeton haché
         }
 
         $uri = $_SERVER['REQUEST_URI'];
@@ -30,7 +31,6 @@ class Main
             echo json_encode(['redirect_url' => $uri]);
             exit();
         }
-        
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $csrfToken = $_POST['csrf_token'] ?? '';
@@ -81,7 +81,7 @@ class Main
      */
     public function checkCsrfToken($token)
     {
-        if (!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']) {
+        if (!isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
             // Retourner une erreur 403 si le jeton CSRF est invalide ou manquant
             http_response_code(403);
             echo json_encode(['error' => 'Jeton CSRF invalide.']);

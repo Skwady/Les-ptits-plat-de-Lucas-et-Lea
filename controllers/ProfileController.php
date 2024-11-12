@@ -6,12 +6,15 @@ use App\models\ProfileModel;
 
 class ProfileController extends Controller
 {
-    public function viewProfile()
+    public function viewProfile($userId)
     {
-        $userId = $_SESSION['id'];
         $profileModel = new ProfileModel();
-        $profile = $profileModel->select($userId);
-        $this->render('user/profile', ['profile' => $profile]);
+        $profile = $profileModel->selectProfileByUserId($userId);
+        if($_SESSION['id'] == $userId || $_SESSION['role'] == 'Admin'){
+            $this->render('user/profile', ['profile' => $profile, 'userId' => $userId]);
+        }else{
+            header("Location: /profile/viewProfile/" . $_SESSION['id']);
+        }
     }
 
     public function updateProfile()
