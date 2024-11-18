@@ -28,9 +28,17 @@ class RecipeModel extends Model
                 FROM ' . $this->table . ' r 
                 LEFT JOIN comments c ON c.recipe_id = r.id 
                 LEFT JOIN type t ON t.id = r.type_id 
+                LEFT JOIN likes l ON l.recipe_id = r.id
                 WHERE r.type_id = :type';
         
         return $this->req($sql, ['type' => $type])->fetchAll();
+    }
+
+    public function isFavoritedByUser($recipeId, $userId)
+    {
+        $sql = "SELECT COUNT(*) as count FROM favorite WHERE recipe_id = ? AND user_id = ?";
+        $result = $this->req($sql, [$recipeId, $userId])->fetch();
+        return $result->count > 0; // Retourne true si la recette est favorisée
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\controllers;
 
 use App\config\CloudinaryService;
+use App\models\LikeModel;
+use App\models\FavoriteModel;
 use App\models\RecipeModel;
 use App\models\TypeModel;
 
@@ -11,7 +13,20 @@ class RecipesController extends Controller
     public function listRecipes($type)
     {
         $recipeModel = new RecipeModel();
+        $userId = $_SESSION['id'] ?? null; // ID de l'utilisateur connecté, ou null si non connecté
+
+        // Récupérer toutes les recettes par type
         $recipes = $recipeModel->selectRecipeByType($type);
+
+        $likeModel = new LikeModel();
+        $favoriteModel = new FavoriteModel();
+
+        // Ajouter les informations supplémentaires pour chaque recette
+        foreach ($recipes as $recipe) {
+            $recipe->like_count = $likeModel->countLikes($recipe->id); // Nombre de likes
+            $recipe->is_favorited = $userId ? $favoriteModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipe->id]) : false;
+            $recipe->is_liked = $userId ? !empty($likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
+        }
 
         $this->render('recipes/recipes', ['recipes' => $recipes, 'type' => $type]);
     }
@@ -69,7 +84,7 @@ class RecipesController extends Controller
         $this->render('recipes/add', ['types' => $types]);
     }
 
-    public function updateRecipe($recipeId)
+    public function updateRecipe($recipeId, $type)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $recipeModel = new RecipeModel();
@@ -126,7 +141,7 @@ class RecipesController extends Controller
                 'slug' => $slug
             ])->update($recipeId);
 
-            echo json_encode(['success' => true, 'redirect' => '/recipes/listRecipes']);
+            echo json_encode(['success' => true, 'redirect' => '/recipes/listRecipes/' . $type . '#' . $recipeId]);
             exit();
         }
 
@@ -139,7 +154,7 @@ class RecipesController extends Controller
         $this->render('recipes/edit', ['types' => $types, 'recipe' => $recipe, 'recipeId' => $recipeId]);
     }
 
-    public function deleteRecipe($recipeId)
+    public function deleteRecipe($recipeId, $type)
     {
         $recipeModel = new RecipeModel();
         $recipe = $recipeModel->select($recipeId);
@@ -151,7 +166,7 @@ class RecipesController extends Controller
         }
 
         $recipeModel->delete($recipeId);
-        header("Location: /recipes");
+        header("Location: /recipes/listRecipes/$type");
         exit();
     }
 }

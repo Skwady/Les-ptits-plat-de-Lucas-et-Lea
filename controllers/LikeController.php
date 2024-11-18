@@ -6,29 +6,36 @@ use App\models\LikeModel;
 
 class LikeController extends Controller
 {
-    public function addLike($recipeId)
+    public function addLike($recipeId, $type)
     {
         $userId = $_SESSION['id'];
         $likeModel = new LikeModel();
-        $likeModel->addLike($userId, $recipeId);
-        header("Location: /recipes/view/" . $recipeId);
+
+        $existingLike = $likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+
+        if (empty($existingLike)) {
+            $likeModel->hydrate([
+                'user_id' => $userId,
+                'recipe_id' => $recipeId,
+            ])->create();
+        }
+
+        header("Location: /recipes/listRecipes/$type#$recipeId");
         exit();
     }
 
-    public function removeLike($recipeId)
+    public function removeLike($recipeId, $type)
     {
         $userId = $_SESSION['id'];
         $likeModel = new LikeModel();
-        $likeModel->removeLike($userId, $recipeId);
-        header("Location: /recipes/view/" . $recipeId);
-        exit();
-    }
 
-    public function viewLikedRecipes()
-    {
-        $userId = $_SESSION['id'];
-        $likeModel = new LikeModel();
-        $likedRecipes = $likeModel->getLikedRecipesByUser($userId);
-        $this->render('recipes/liked', ['likedRecipes' => $likedRecipes]);
+        $existingLike = $likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+
+        if (!empty($existingLike)) {
+            $likeModel->delete($existingLike[0]->id);
+        }
+
+        header("Location: /recipes/listRecipes/$type#$recipeId");
+        exit();
     }
 }

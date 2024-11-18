@@ -8,6 +8,8 @@ function convertMinutesToHours(minutes) {
 
     if (remainingMinutes > 0) {
         return `${hours}h ${remainingMinutes}min`;
+    }else if (hours > 0 && remainingMinutes == 0) {
+        return `${hours}h`;
     }
     return 'aucun';
 }

@@ -7,7 +7,7 @@ $title = 'Liste des Recettes';
 <div class="notifications" id="notifications">Merci pour votre j'aime</div>
 <div class="container mt-5 mb-5">
     <?php foreach ($recipes as $recipe): ?>
-        <div>
+        <div id="<?= $recipe->id ?>">
             <h3 class="text-center mb-3 title">
                 <?= $recipe->title ? $recipe->title : 'Recette sans titre' ?>
             </h3>
@@ -33,8 +33,17 @@ $title = 'Liste des Recettes';
                     <img src="<?= $recipe->slug ?>" alt="Image de la recette" class="mb-4">
                 </div>
                 <div class="d-flex justify-content-evenly mt-1">
-                    <a href="#"><i class="fa-regular fa-heart heart-icon"></i></a>
-                    <a href="#"><i class="fa-regular fa-thumbs-up heart-gradient"></i></a>
+                    <?php if (!$recipe->is_favorited): ?>
+                    <a href="/favorite/addFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon"></i></a>
+                    <?php else: ?>
+                    <a href="/favorite/removeFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon filled"></i></a>
+                    <?php endif; ?>
+                    <span><?= $recipe->like_count ?> likes</span>
+                    <?php if (!$recipe->is_liked): ?>
+                    <a href="/like/addLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient"></i></a>
+                    <?php else: ?>
+                    <a href="/like/removeLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient filled"></i></a>
+                    <?php endif; ?>
                     <a href="#"><i class="fa-solid fa-comment heart-gradient"></i></a>
                     <a href="#"><i class="fa-solid fa-share-nodes heart-gradient"></i></a>
                 </div>
@@ -54,7 +63,7 @@ $title = 'Liste des Recettes';
                     <?php endif; ?>
                 </div>
 
-                <?php if ($_SESSION['id']): ?>
+                <?php if (isset($_SESSION['id'])): ?>
                     <form action="/recipes/comment" method="POST">
                         <input type="hidden" name="recipe_id" value="<?= $recipe->id ?>">
                         <input type="hidden" name="user_id" value="<?= $_SESSION['id'] ?>">
@@ -64,13 +73,14 @@ $title = 'Liste des Recettes';
                     </form>
                 <?php endif; ?>
             </div>
+            <?php if(isset($_SESSION['role']) == 'Admin'): ?>
             <div class="d-flex flex-end">
-                <a href="/recipes/updateRecipe/<?= $recipe->id ?>" class="btn">modifier</a>
-                <a href="/recipes/deleteRecipe/<?= $recipe->id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
+                <a href="/recipes/updateRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn">modifier</a>
+                <a href="/recipes/deleteRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
             </div>
+            <?php endif; ?>
         </div>
     <?php endforeach; ?>
 </div>
 
 <?php $script = 'recipesTime'; ?>
-<?php $scripts = 'clickColor'; ?>

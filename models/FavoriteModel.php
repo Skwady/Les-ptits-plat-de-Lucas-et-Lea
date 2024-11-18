@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-class LikeModel extends Model
+class FavoriteModel extends Model
 {
     protected $id;
     protected $user_id;
@@ -11,16 +11,9 @@ class LikeModel extends Model
 
     public function __construct()
     {
-        $this->table = 'likes';
+        $this->table = 'favorite'; // Définir la table liée au modèle
     }
 
-    public function countLikes($recipeId)
-    {
-        $sql = "SELECT COUNT(*) as count FROM {$this->table} WHERE recipe_id = ?";
-        $result = $this->req($sql, [$recipeId])->fetch();
-        return $result->count;
-    }
-    
     /**
      * Get the value of id
      */
@@ -33,21 +26,6 @@ class LikeModel extends Model
      */
     public function setId($id): self {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get the value of created_at
-     */
-    public function getCreated_At() {
-        return $this->created_at;
-    }
-
-    /**
-     * Set the value of created_at
-     */
-    public function setCreated_At($created_at): self {
-        $this->created_at = $created_at;
         return $this;
     }
 
@@ -78,6 +56,21 @@ class LikeModel extends Model
      */
     public function setRecipe_Id($recipe_id): self {
         $this->recipe_id = $recipe_id;
+        return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     */
+    public function getCreated_At() {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     */
+    public function setCreated_At($created_at): self {
+        $this->created_at = $created_at;
         return $this;
     }
 }

@@ -6,7 +6,7 @@ $title = "Contact";
 <!-- Section de contact pour Lucas -->
 <section class="contact-section py-5">
     <div class="container">
-        <h2>Contactez-nous !</h2>
+        <h2>Contactez Lucas</h2>
         <p class="text-center">Vous avez des questions sur nos recettes ou besoin de conseils en cuisine ? Lucas est là pour vous aider ! Que ce soit pour des astuces sur les plats déjà présents sur le blog ou pour vous inspirer avec une nouvelle recette, n'hésitez pas à remplir le formulaire de contact.</p>
         
         <div class="row mt-5 contact-form align-items-center">
