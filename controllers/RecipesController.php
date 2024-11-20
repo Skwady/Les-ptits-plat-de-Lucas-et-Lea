@@ -3,39 +3,50 @@
 namespace App\controllers;
 
 use App\config\CloudinaryService;
-use App\models\LikeModel;
-use App\models\FavoriteModel;
 use App\models\RecipeModel;
-use App\models\TypeModel;
+use App\repository\CommentRepository;
+use App\repository\FavoriteRepository;
+use App\repository\RecipeRepository;
+use App\repository\TypeRepository;
+use App\repository\LikeRepository;
 
 class RecipesController extends Controller
 {
     public function listRecipes($type)
     {
-        $recipeModel = new RecipeModel();
+        $recipeRepository = new RecipeRepository();
         $userId = $_SESSION['id'] ?? null; // ID de l'utilisateur connecté, ou null si non connecté
 
         // Récupérer toutes les recettes par type
-        $recipes = $recipeModel->selectRecipeByType($type);
+        $recipes = $recipeRepository->selectRecipeByType($type);
 
-        $likeModel = new LikeModel();
-        $favoriteModel = new FavoriteModel();
+        $likeRepository = new LikeRepository();
+        $favoriteRepository = new FavoriteRepository();
+        $commentRepository = new CommentRepository();
 
         // Ajouter les informations supplémentaires pour chaque recette
         foreach ($recipes as $recipe) {
-            $recipe->like_count = $likeModel->countLikes($recipe->id); // Nombre de likes
-            $recipe->is_favorited = $userId ? $favoriteModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipe->id]) : false;
-            $recipe->is_liked = $userId ? !empty($likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
+            $recipe->like_count = $likeRepository->countLikes($recipe->id); // Nombre de likes
+            $recipe->is_favorited = $userId ? $favoriteRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id]) : false;
+            $recipe->is_liked = $userId ? !empty($likeRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
+            $recipe->is_comment = $userId ? !empty($commentRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
         }
 
-        $this->render('recipes/recipes', ['recipes' => $recipes, 'type' => $type]);
+        $comments = new CommentRepository();
+        $comments->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id]);
+
+        $this->render('recipes/recipes', ['recipes' => $recipes, 'type' => $type, 'comments' => $comments]);
     }
 
     public function addRecipe()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $recipeModel = new RecipeModel();
+            $reciperepository = new RecipeRepository();
             $cloudinaryService = new CloudinaryService();
+            $recipeModel = new RecipeModel();
+            
+            
+            
 
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $image = $_FILES['image'];
@@ -50,18 +61,21 @@ class RecipesController extends Controller
                         $cookTime = empty($_POST['cook_time']) ? null : $_POST['cook_time'];
                         $restTime = empty($_POST['rest_time']) ? null : $_POST['rest_time'];
 
-                        $recipeModel->hydrate([
-                            'title' => $_POST['title'],
-                            'type_id' => $_POST['type_id'],
-                            'servings' => $_POST['servings'],
-                            'difficulty' => $_POST['difficulty'],
-                            'prep_time' => $_POST['prep_time'],
-                            'cook_time' => $cookTime,
-                            'rest_time' => $restTime,
-                            'ingredients' => $_POST['ingredients'],
-                            'instructions' => $_POST['instructions'],
-                            'slug' => $slug
-                        ])->create();
+                        $data = [
+                                'title' => $_POST['title'],
+                                'type_id' => $_POST['type_id'],
+                                'servings' => $_POST['servings'],
+                                'difficulty' => $_POST['difficulty'],
+                                'prep_time' => $_POST['prep_time'],
+                                'cook_time' => $cookTime,
+                                'rest_time' => $restTime,
+                                'ingredients' => $_POST['ingredients'],
+                                'instructions' => $_POST['instructions'],
+                                'slug' => $slug
+                        ];
+
+                        $recipeModel->hydrate($data);
+                        $reciperepository->create($data);
 
                         echo json_encode(['success' => true, 'redirect' => '/recipes/addRecipe']);
                         exit();
@@ -79,19 +93,21 @@ class RecipesController extends Controller
             }
         }
 
-        $typeModel = new TypeModel();
-        $types = $typeModel->selectAll();
+        $typeRepository = new TypeRepository();
+        $types = $typeRepository->findAll();
         $this->render('recipes/add', ['types' => $types]);
     }
 
     public function updateRecipe($recipeId, $type)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $recipeModel = new RecipeModel();
+            $reciperepository = new RecipeRepository();
+            $recipeRepository = new RecipeRepository();
             $cloudinaryService = new CloudinaryService();
+            $recipeModel = new RecipeModel();
 
             // Récupérer la recette existante
-            $recipe = $recipeModel->select($recipeId);
+            $recipe = $reciperepository->find($recipeId);
 
             $slug = $recipe->slug; // Garder l'URL de l'image actuelle par défaut
 
@@ -127,8 +143,7 @@ class RecipesController extends Controller
             $cookTime = empty($_POST['cook_time']) ? null : $_POST['cook_time'];
             $restTime = empty($_POST['rest_time']) ? null : $_POST['rest_time'];
 
-            // Hydrater et mettre à jour la recette
-            $recipeModel->hydrate([
+            $data = [
                 'title' => $_POST['title'],
                 'type_id' => $_POST['type_id'],
                 'servings' => $_POST['servings'],
@@ -138,26 +153,29 @@ class RecipesController extends Controller
                 'rest_time' => $restTime,
                 'ingredients' => $_POST['ingredients'],
                 'instructions' => $_POST['instructions'],
-                'slug' => $slug
-            ])->update($recipeId);
+                'slug' => $slug ?? null
+            ];
+            // Hydrater et mettre à jour la recette
+            $recipeModel->hydrate($data);
+            $reciperepository->update($recipeId, $data);
 
             echo json_encode(['success' => true, 'redirect' => '/recipes/listRecipes/' . $type . '#' . $recipeId]);
             exit();
         }
 
         // Charger les types pour le champ de sélection
-        $typeModel = new TypeModel();
-        $recipeModel = new RecipeModel();
-        $types = $typeModel->selectAll();
-        $recipe = $recipeModel->select($recipeId);
+        $typeRepository = new TypeRepository();
+        $recipeRepository = new RecipeRepository();
+        $types = $typeRepository->findAll();
+        $recipe = $recipeRepository->find($recipeId);
 
         $this->render('recipes/edit', ['types' => $types, 'recipe' => $recipe, 'recipeId' => $recipeId]);
     }
 
     public function deleteRecipe($recipeId, $type)
     {
-        $recipeModel = new RecipeModel();
-        $recipe = $recipeModel->select($recipeId);
+        $recipeRepository = new RecipeRepository();
+        $recipe = $recipeRepository->find($recipeId);
 
         if ($recipe && !empty($recipe->slug)) {
             $publicId = pathinfo($recipe->slug, PATHINFO_FILENAME);
@@ -165,7 +183,7 @@ class RecipesController extends Controller
             $cloudinary->deleteFile($publicId);
         }
 
-        $recipeModel->delete($recipeId);
+        $recipeRepository->delete($recipeId);
         header("Location: /recipes/listRecipes/$type");
         exit();
     }

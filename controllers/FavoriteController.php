@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\models\FavoriteModel;
+use App\repository\FavoriteRepository;
 
 class FavoriteController extends Controller
 {
@@ -10,15 +11,19 @@ class FavoriteController extends Controller
     {
         $userId = $_SESSION['id']; // ID de l'utilisateur connecté
         $favoriteModel = new FavoriteModel();
+        $favoriteRepository = new FavoriteRepository();
 
         // Vérifie si le favori existe déjà
-        $existingFavorite = $favoriteModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+        $existingFavorite = $favoriteRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+
+        $data = [
+            'user_id' => $userId,
+            'recipe_id' => $recipeId,
+        ];
 
         if (empty($existingFavorite)) {
-            $favoriteModel->hydrate([
-                'user_id' => $userId,
-                'recipe_id' => $recipeId,
-            ])->create();
+            $favoriteModel->hydrate($data);
+            $favoriteRepository->create($data);
         }
 
         header("Location: /recipes/listRecipes/$type#$recipeId");
@@ -28,13 +33,13 @@ class FavoriteController extends Controller
     public function removeFavorite($recipeId, $type)
     {
         $userId = $_SESSION['id']; // ID de l'utilisateur connecté
-        $favoriteModel = new FavoriteModel();
+        $favoriteRepository = new FavoriteRepository();
 
         // Supprime le favori
-        $existingFavorite = $favoriteModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+        $existingFavorite = $favoriteRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
 
         if (!empty($existingFavorite)) {
-            $favoriteModel->delete($existingFavorite[0]->id);
+            $favoriteRepository->delete($existingFavorite[0]->id);
         }
 
         header("Location: /recipes/listRecipes/$type#$recipeId");
@@ -44,9 +49,9 @@ class FavoriteController extends Controller
     public function viewFavorites()
     {
         $userId = $_SESSION['id'];
-        $favoriteModel = new FavoriteModel();
+        $favoriteRepository = new FavoriteRepository();
 
-        $favorites = $favoriteModel->selectBy(['user_id' => $userId]);
+        $favorites = $favoriteRepository->findBy(['user_id' => $userId]);
 
         $this->render('profile/favorites', ['favorites' => $favorites]);
     }

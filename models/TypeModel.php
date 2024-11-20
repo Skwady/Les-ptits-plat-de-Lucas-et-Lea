@@ -7,11 +7,6 @@ class TypeModel extends Model
     protected $id;
     protected $type;
 
-    public function __construct()
-    {
-        $this->table = 'type';
-    }
-
     /**
      * Get the value of id
      */

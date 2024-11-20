@@ -37,7 +37,7 @@
                         <img src="<?= $recipe->slug ?>" class="card-img-top" alt="<?= $recipe->title ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($recipe->title) ?></h5>
-                            <a href="/recipes/view/<?= $recipe->id ?>" class="btn btn-primary">Voir la recette</a>
+                            <a href="/recipes/listRecipes/<?= $recipe->type_id ?>#<?= $recipe->id ?>" class="btn btn-primary">Voir la recette</a>
                         </div>
                     </div>
                 </div>

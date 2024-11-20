@@ -8,18 +8,6 @@ class LikeModel extends Model
     protected $user_id;
     protected $recipe_id;
     protected $created_at;
-
-    public function __construct()
-    {
-        $this->table = 'likes';
-    }
-
-    public function countLikes($recipeId)
-    {
-        $sql = "SELECT COUNT(*) as count FROM {$this->table} WHERE recipe_id = ?";
-        $result = $this->req($sql, [$recipeId])->fetch();
-        return $result->count;
-    }
     
     /**
      * Get the value of id

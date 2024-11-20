@@ -112,8 +112,13 @@
 
 
 .comments-container {
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
+    display: none;
+}
+
+.comments-form {
+    display: none;
 }
 
 .comments-container::-webkit-scrollbar {

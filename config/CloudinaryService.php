@@ -66,4 +66,16 @@ class CloudinaryService
         return substr($path_parts['basename'], 0, strpos($path_parts['basename'], '.'));
     }
 
+    public function validateAndUploadImage($image): ?string
+    {
+        if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+            if (in_array($image['type'], $allowedTypes)) {
+                $cloudinaryService = new CloudinaryService();
+                return $cloudinaryService->uploadFile($image['tmp_name']);
+            }
+        }
+        return null;
+    }
 }

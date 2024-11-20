@@ -17,45 +17,6 @@ class RecipeModel extends Model
     protected $rest_time;
     protected $type_id;
 
-    public function __construct()
-    {
-        $this->table = 'recipes';
-    }
-
-    public function selectRecipeByType($type)
-    {
-        $sql = 'SELECT r.*, c.content, t.type
-                FROM ' . $this->table . ' r 
-                LEFT JOIN comments c ON c.recipe_id = r.id 
-                LEFT JOIN type t ON t.id = r.type_id 
-                LEFT JOIN likes l ON l.recipe_id = r.id
-                WHERE r.type_id = :type';
-        
-        return $this->req($sql, ['type' => $type])->fetchAll();
-    }
-
-    public function isFavoritedByUser($recipeId, $userId)
-    {
-        $sql = "SELECT COUNT(*) as count FROM favorite WHERE recipe_id = ? AND user_id = ?";
-        $result = $this->req($sql, [$recipeId, $userId])->fetch();
-        return $result->count > 0; // Retourne true si la recette est favorisée
-    }
-
-    /**
-     * Get the value of id
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     */
-    public function setId($id): self {
-        $this->id = $id;
-        return $this;
-    }
-
     /**
      * Get the value of title
      */

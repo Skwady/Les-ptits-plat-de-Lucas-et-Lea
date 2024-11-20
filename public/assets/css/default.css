@@ -1,7 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.parisienne-regular, .parisienne-regular-title {
+    font-family: "Parisienne", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.parisienne-regular-title {
+    font-size: 2.5em;
 }
 
 main {
@@ -16,6 +28,10 @@ main {
     color: #fff;
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.mb-8 {
+    margin-bottom: 8rem;
 }
 
 .bg-gradiant {

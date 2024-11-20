@@ -96,7 +96,7 @@
                     <?php if(isset($_SESSION['id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/profile/viewProfile/<?= $_SESSION['id'] ?>">
-                            <h4>Profile</h4>
+                            <h4>Profil</h4>
                         </a>
                     </li>
                     
@@ -115,7 +115,6 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="recettesDropdown">
                                 <li><a class="dropdown-item" href="/recipes/addRecipe">Ajouter une recette</a></li>
-                                <li><a class="dropdown-item" href="/recipes/listRecipes">liste des recettes</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>

@@ -1,0 +1,43 @@
+/* Images de section */
+.section-image {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border: 5px solid #fff;
+}
+
+/* Images du header */
+.header-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* Box conseils */
+.advice-box {
+    font-style: italic;
+}
+
+.circle {
+    width: 500px;
+    height: 350px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.list-unstyled {
+    list-style-type: none;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Général */
+body {
+    background-color: #f3f3f3;
+}

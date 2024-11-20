@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use App\models\LikeModel;
+use App\repository\LikeRepository;
 
 class LikeController extends Controller
 {
@@ -10,14 +11,17 @@ class LikeController extends Controller
     {
         $userId = $_SESSION['id'];
         $likeModel = new LikeModel();
+        $likeRepository = new LikeRepository();
 
-        $existingLike = $likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+        $existingLike = $likeRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
 
+        $data = [
+            'user_id' => $userId,
+            'recipe_id' => $recipeId,
+        ];
         if (empty($existingLike)) {
-            $likeModel->hydrate([
-                'user_id' => $userId,
-                'recipe_id' => $recipeId,
-            ])->create();
+            $likeModel->hydrate($data);
+            $likeRepository->create($data);
         }
 
         header("Location: /recipes/listRecipes/$type#$recipeId");
@@ -27,12 +31,12 @@ class LikeController extends Controller
     public function removeLike($recipeId, $type)
     {
         $userId = $_SESSION['id'];
-        $likeModel = new LikeModel();
+        $likeRepository = new LikeRepository();
 
-        $existingLike = $likeModel->selectBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
+        $existingLike = $likeRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipeId]);
 
         if (!empty($existingLike)) {
-            $likeModel->delete($existingLike[0]->id);
+            $likeRepository->delete($existingLike[0]->id);
         }
 
         header("Location: /recipes/listRecipes/$type#$recipeId");

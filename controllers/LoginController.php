@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\models\ProfileModel;
 use App\models\UsersModel;
+use App\Repository\UsersRepository;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController extends Controller
@@ -48,8 +49,8 @@ class LoginController extends Controller
             exit();
         }
 
-        $LoginModel = new UsersModel();
-        $user = $LoginModel->search($email);
+        $LoginRepository = new UsersRepository();
+        $user = $LoginRepository->search($email);
 
         // Vérifier si l'utilisateur est confirmé
         if ($user && $user->is_confirmed == '0') {
@@ -104,7 +105,7 @@ class LoginController extends Controller
                 $token = bin2hex(random_bytes(32));
 
                 // Hydrater et enregistrer l'utilisateur avec le token
-                $user = (new UsersModel())->hydrate([
+                $data = [
                     'name' => $name,
                     'firstname' => $firstname,
                     'email' => $email,
@@ -112,8 +113,10 @@ class LoginController extends Controller
                     'confirmed_token' => $token,
                     'is_confirmed' => 0,
                     'id_role' => $id_role
-                ]);
-                if ($user->create()) {
+                ];
+                $UsersModel = new UsersModel();
+                $UsersModel->hydrate($data);
+                if ($UsersModel = (new UsersRepository())->create($data)) {
                     // Envoi de l'email de confirmation
                     $this->sendConfirmationEmail($email, $token);
 
@@ -169,15 +172,17 @@ class LoginController extends Controller
     public function confirm($token = null)
     {
         if ($token) {
-            $LoginModel = new UsersModel();
-            $user = $LoginModel->findByToken($token);
+            $LoginRepository = new UsersRepository();
+            $user = $LoginRepository->findByToken($token);
 
             if ($user) {
-                $LoginModel->confirmUser($user->id);
+                $LoginRepository->confirmUser($user->id);
                 $profileModel = new ProfileModel();
-                $profile = $profileModel->hydrate([
+                $data = [
                     'user_id' => $user->id
-                ])->create();
+                ];
+                $profileModel->hydrate($data);
+                $LoginRepository->create($data);
                 echo "Votre compte a été confirmé avec succès !";
             } else {
                 echo "Lien de confirmation invalide ou expiré.";

@@ -6,14 +6,9 @@ class CommentModel extends Model
 {
     protected $id;
     protected $content;
-    protected $created_at;
-    protected $recipe_id;
     protected $user_id;
-
-    public function __construct()
-    {
-        $this->table = 'comments';
-    }
+    protected $recipe_id;
+    protected $created_at;
 
     /**
      * Get the value of id

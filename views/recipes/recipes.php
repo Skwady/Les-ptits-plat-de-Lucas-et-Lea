@@ -5,10 +5,10 @@ $title = 'Liste des Recettes';
 
 <div class="notification" id="notification">Recette ajoutée à vos favoris</div>
 <div class="notifications" id="notifications">Merci pour votre j'aime</div>
-<div class="container mt-5 mb-5">
-    <?php foreach ($recipes as $recipe): ?>
-        <div id="<?= $recipe->id ?>">
-            <h3 class="text-center mb-3 title">
+<?php foreach ($recipes as $recipe): ?>
+    <div class="container mt-5 mb-8">
+        <div id="<?= $recipe->id ?> <?= isset($comment->id) ?>">
+            <h3 class="text-center mb-3 title parisienne-regular-title">
                 <?= $recipe->title ? $recipe->title : 'Recette sans titre' ?>
             </h3>
         </div>
@@ -27,60 +27,69 @@ $title = 'Liste des Recettes';
                         <p><?= nl2br($recipe->instructions) ?></p>
                     </div>
                 </div>
+                <?php if (isset($_SESSION['role']) == 'Admin'): ?>
+                    <div class="d-flex flex-end mb-8 gap-2">
+                        <a href="/recipes/updateRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn">modifier</a>
+                        <a href="/recipes/deleteRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col-md-4">
                 <div class="img">
                     <img src="<?= $recipe->slug ?>" alt="Image de la recette" class="mb-4">
                 </div>
                 <div class="d-flex justify-content-evenly mt-1">
-                    <?php if (!$recipe->is_favorited): ?>
-                    <a href="/favorite/addFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon"></i></a>
-                    <?php else: ?>
-                    <a href="/favorite/removeFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon filled"></i></a>
+                    <?php if (isset($_SESSION['id'])): ?>
+                        <?php if (!$recipe->is_favorited): ?>
+                            <a href="/favorite/addFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon"></i></a>
+                        <?php else: ?>
+                            <a href="/favorite/removeFavorite/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-heart heart-icon filled"></i></a>
+                        <?php endif; ?>
+                        <span><?= $recipe->like_count ?> likes</span>
+                        <?php if (!$recipe->is_liked): ?>
+                            <a href="/like/addLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient"></i></a>
+                        <?php else: ?>
+                            <a href="/like/removeLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient filled"></i></a>
+                        <?php endif; ?>
                     <?php endif; ?>
-                    <span><?= $recipe->like_count ?> likes</span>
-                    <?php if (!$recipe->is_liked): ?>
-                    <a href="/like/addLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient"></i></a>
-                    <?php else: ?>
-                    <a href="/like/removeLike/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-regular fa-thumbs-up heart-gradient filled"></i></a>
-                    <?php endif; ?>
-                    <a href="#"><i class="fa-solid fa-comment heart-gradient"></i></a>
-                    <a href="#"><i class="fa-solid fa-share-nodes heart-gradient"></i></a>
+                    <a href="/comment/addComment/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-solid fa-comment heart-gradient"></i></a>
+                    <a href="/comment/removeComment/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-solid fa-share-nodes heart-gradient fill"></i></a>
                 </div>
 
+                <?php
+                $comments = isset($recipe->content) ? explode('||', $recipe->content) : [];
+                ?>
                 <!-- Scrollable Comments Section -->
                 <div class="comments-container mt-3">
-                    <?php if (!empty($recipe->content)): ?>
-                        <?php foreach (array_slice($recipe->content, 0, 3) as $comment): ?> <!-- Limit to 3 displayed comments -->
-                            <div class="card mt-2">
-                                <div class="card-body">
-                                    <p><?= htmlspecialchars($comment->content) ?></p>
+                    <?php if (!empty($comments)): ?>
+                        <div class="scrollable-comments">
+                            <?php foreach ($comments as $comment): ?>
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <p><?= htmlspecialchars($comment) ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
                     <?php else: ?>
-                        <p>pas de commentaire</p>
+                        <p>Pas de commentaire</p>
                     <?php endif; ?>
                 </div>
-
-                <?php if (isset($_SESSION['id'])): ?>
-                    <form action="/recipes/comment" method="POST">
-                        <input type="hidden" name="recipe_id" value="<?= $recipe->id ?>">
-                        <input type="hidden" name="user_id" value="<?= $_SESSION['id'] ?>">
-                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                        <textarea type="text" name="comments" maxlength="150" placeholder="Votre commentaire Maximum 150 caractères" class="form-control mt-3"></textarea>
-                        <button class="btn mt-1">Envoyer</button>
-                    </form>
-                <?php endif; ?>
+                <div class="comments-form">
+                    <?php if (isset($_SESSION['id'])): ?>
+                        <form action="/Comment/addComment/<?= $recipe->id ?>/<?= $recipe->type_id ?>" method="POST">
+                            <textarea type="text" name="content" maxlength="150" placeholder="Votre commentaire Maximum 150 caractères" class="form-control mt-3"></textarea>
+                            <input type="hidden" name="recipe_id" value="<?= $recipe->id ?>">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                            <button type="submit" class="btn mt-1">Envoyer</button>
+                            <div id="error-message" class="alert alert-danger" role="alert"></div>
+                        </form>
+                    <?php endif; ?>
+                </div>
             </div>
-            <?php if(isset($_SESSION['role']) == 'Admin'): ?>
-            <div class="d-flex flex-end">
-                <a href="/recipes/updateRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn">modifier</a>
-                <a href="/recipes/deleteRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
-            </div>
-            <?php endif; ?>
         </div>
-    <?php endforeach; ?>
-</div>
+    </div>
+<?php endforeach; ?>
 
 <?php $script = 'recipesTime'; ?>
+<?php $scripts = 'comment'; ?>

@@ -9,11 +9,6 @@ class FavoriteModel extends Model
     protected $recipe_id;
     protected $created_at;
 
-    public function __construct()
-    {
-        $this->table = 'favorite'; // Définir la table liée au modèle
-    }
-
     /**
      * Get the value of id
      */
