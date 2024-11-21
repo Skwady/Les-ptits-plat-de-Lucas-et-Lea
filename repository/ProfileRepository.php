@@ -2,7 +2,7 @@
 
 namespace App\repository;
 
-class Profilerepository extends BaseRepository
+class ProfileRepository extends BaseRepository
 {
 
     public function __construct()

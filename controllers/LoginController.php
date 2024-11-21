@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use App\models\ProfileModel;
 use App\models\UsersModel;
-use App\Repository\UsersRepository;
+use App\repository\UsersRepository;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class LoginController extends Controller

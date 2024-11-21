@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Controllers;
-
-use App\Models\ContactModel;
+namespace App\controllers;
 
 class ContactController extends Controller
 {

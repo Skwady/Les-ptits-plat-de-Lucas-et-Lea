@@ -3,7 +3,7 @@
 namespace App\controllers;
 
 use App\models\CommentModel;
-use App\Repository\CommentRepository;
+use App\repository\CommentRepository;
 
 class CommentController extends Controller
 {

@@ -3,9 +3,9 @@
 namespace App\controllers;
 
 use App\models\ProfileModel;
-use App\Repository\ProfileRepository;
-use App\Repository\FavoriteRepository;
-use App\Repository\RecipeRepository;
+use App\repository\ProfileRepository;
+use App\repository\FavoriteRepository;
+use App\repository\RecipeRepository;
 
 class ProfileController extends Controller
 {

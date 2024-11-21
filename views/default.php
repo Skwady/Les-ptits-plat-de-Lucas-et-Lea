@@ -83,7 +83,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/conseil">
                             <h4>Conseils et astuces</h4>
                         </a>
                     </li>

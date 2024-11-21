@@ -22,6 +22,7 @@
 
             <?php if($_SESSION['id'] == $userId): ?>
             <a href="/profile/edit" class="btn btn-primary">Modifier le profil</a>
+            <a href="/logout" class="btn btn-primary">Déconnexion</a>
             <?php endif; ?>
         </div>
     </div>
