@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxslt-dev \
     libzip-dev \
     pkg-config \
+    libssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         pdo_mysql \
@@ -28,6 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Installer l'extension MongoDB PHP
+RUN pecl install mongodb \
+    && docker-php-ext-enable mongodb
+
 # Activer le module mod_rewrite d'Apache
 RUN a2enmod rewrite
 
@@ -36,6 +41,9 @@ RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available
 
 # Définir les fichiers par défaut recherchés par Apache
 RUN echo "DirectoryIndex index.php index.html" >> /etc/apache2/apache2.conf
+
+# Définir le ServerName pour Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Copier le fichier php.ini personnalisé
 COPY config/php.ini /usr/local/etc/php/php.ini

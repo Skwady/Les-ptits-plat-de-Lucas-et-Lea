@@ -13,4 +13,20 @@ abstract class Controller
         $contenu = ob_get_clean();
         require_once ROOT.'/views/default.php';
     }
+
+    public function renderProfile(string $file, array $donnees = [])
+    {
+        extract($donnees);
+        
+        ob_start();
+        require_once ROOT . '/views/profiles/' . $file . '.php';
+        $profileContent = ob_get_clean();
+        
+        ob_start();
+        require_once ROOT . '/views/profiles/layout.php';
+        $contenu = ob_get_clean();
+
+        require_once ROOT . '/views/default.php';
+    }
+
 }

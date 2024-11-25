@@ -2,19 +2,43 @@
 
 namespace App\controllers;
 
-use App\models\ProfileModel;
+use App\repository\ActivityRepository;
 use App\repository\ProfileRepository;
 use App\repository\FavoriteRepository;
 use App\repository\RecipeRepository;
+use App\services\ActivityService;
+use App\services\CloudinaryService;
+use App\services\ProfileService;
 
 class ProfileController extends Controller
 {
+
+    /**
+     * Affiche le profil avec le fil d'actualité.
+     *
+     * @param string $userId ID de l'utilisateur.
+     */
+    public function activity(string $userId, int $limit = 10)
+    {
+        $activityRepository = new ActivityRepository();
+        // Récupérer les activités des utilisateurs
+        $activities = $activityRepository->findBy('actu', [], [
+            'sort' => ['created_at' => -1], // Tri par date décroissante
+            'limit' => $limit
+        ]);
+
+        // Rendre la vue du profil avec les activités
+        $this->renderProfile('actu/activity', [
+            'activities' => $activities,
+            'user_id' => $userId
+        ]);
+    }
+
     public function viewProfile($userId)
     {
         $profilerepository = new ProfileRepository();
         $favoriterepository = new FavoriteRepository();
         $reciperepository = new Reciperepository();
-        $profileModel = new ProfileModel();
 
         // Charger les informations du profil
         $profile = $profilerepository->selectProfileByUserId($userId);
@@ -31,7 +55,7 @@ class ProfileController extends Controller
             }
 
             // Rendre la vue du profil avec les données
-            $this->render('user/profile', [
+            $this->renderProfile('user/profile', [
                 'profile' => $profile,
                 'favorites' => $favoriteRecipes,
                 'userId' => $userId
@@ -43,34 +67,73 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateProfile()
+    public function publish()
     {
+        header('Content-Type: application/json');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userId = $_SESSION['id'];
-            $profileRepository = new ProfileRepository();
-            $profileModel = new ProfileModel();
+            $message = $_POST['message'] ?? null;
+            $imageUrl = null;
 
-            $data = [
-                'bio' => $_POST['bio'],
-                'date_of_birth' => $_POST['date_of_birth'],
-                'profile_picture' => $_FILES['profile_picture']['name'] ?? null
-            ];
-            // Mettre à jour les données du profil
-            $profileModel->hydrate($data);
-            $profileRepository->update($userId, $data);
-
-            // Gérer l'upload de l'image si elle existe
-            if ($profileModel->getProfile_Picture()) {
-                move_uploaded_file(
-                    $_FILES['profile_picture']['tmp_name'],
-                    "uploads/" . $profileModel->getProfile_Picture()
-                );
+            // Vérifier si un message est fourni
+            if (empty($message)) {
+                echo json_encode(['status' => 'error', 'message' => 'Le message ne peut pas être vide']);
+                exit();
             }
 
-            header("Location: /profile/viewProfile/$userId");
+            // Vérifier et uploader l'image si présente
+            if (!empty($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $cloudinaryService = new CloudinaryService();
+                $imageUrl = $cloudinaryService->validateAndUploadImage($_FILES['image']);
+
+                // Si l'upload échoue
+                if (!$imageUrl) {
+                    echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'upload de l\'image']);
+                    exit();
+                }
+            }
+
+            // Publier le message via le service
+            $activityService = new ActivityService();
+            $result = $activityService->publishMessage($_SESSION['id'], $message, $imageUrl);
+
+            echo json_encode($result);
             exit();
         }
 
-        $this->render('user/edit');
+        echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée']);
+        exit();
+    }
+
+    public function updateProfile($userId)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            header('Content-Type: application/json');
+            
+            $data = $_POST;
+            $profileService = new ProfileService();
+
+            // Gestion de l'image de profil
+            $imageUrl = null;
+            if (!empty($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                $cloudinaryService = new CloudinaryService();
+                $imageUrl = $cloudinaryService->validateAndUploadImage($_FILES['profile_picture']);
+
+                if (!$imageUrl) {
+                    echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'upload de l\'image']);
+                    exit();
+                }
+            }
+
+            // Mise à jour du profil
+            $result = $profileService->updateProfile($userId, $data, $imageUrl);
+            echo json_encode($result);
+            exit();
+        }
+
+        // Récupération des données du profil pour affichage
+        $profileRepository = new ProfileRepository();
+        $user = $profileRepository->selectProfileByUserId($userId);
+        $this->renderProfile('user/edit', ['user' => $user]);
     }
 }

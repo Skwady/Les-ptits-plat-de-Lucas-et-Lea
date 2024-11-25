@@ -17,12 +17,7 @@
             <?php endif; ?>
 
             <?php if ($profile->profile_picture): ?>
-                <img src="/uploads/<?= $profile->profile_picture ?>" class="img-fluid mb-3" alt="Photo de profil">
-            <?php endif; ?>
-
-            <?php if($_SESSION['id'] == $userId): ?>
-            <a href="/profile/edit" class="btn btn-primary">Modifier le profil</a>
-            <a href="/logout" class="btn btn-primary">Déconnexion</a>
+                <img src="<?= $profile->profile_picture ?>" class="img-fluid mb-3" alt="Photo de profil">
             <?php endif; ?>
         </div>
     </div>
@@ -37,7 +32,7 @@
                     <div class="card mb-4">
                         <img src="<?= $recipe->slug ?>" class="card-img-top" alt="<?= $recipe->title ?>">
                         <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($recipe->title) ?></h5>
+                            <h5 class="card-title"><?= $recipe->title ?></h5>
                             <a href="/recipes/listRecipes/<?= $recipe->type_id ?>#<?= $recipe->id ?>" class="btn btn-primary">Voir la recette</a>
                         </div>
                     </div>

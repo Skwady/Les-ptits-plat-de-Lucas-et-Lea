@@ -2,33 +2,17 @@
 
 namespace App\controllers;
 
-use App\models\CommentModel;
 use App\repository\CommentRepository;
+use App\services\CommentService;
 
 class CommentController extends Controller
 {
     public function addComment($recipeId, $type)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userId = $_SESSION['id'];
-            $content = $_POST['content'];
-            $commentRepository = new CommentRepository();
-            $commentModel = new CommentModel();
-
-            $data = [
-                'content' => $content,
-                'user_id' => $userId, 
-                'recipe_id' => $recipeId
-                ];
-                
-            $commentModel->hydrate($data);
-            if($commentRepository->create($data)){
-                http_response_code(200);
-                echo json_encode(["status" => "success", "redirect" => "/recipes/listRecipes/$type#$recipeId"]);
-            }else{
-                http_response_code(400);
-                echo json_encode(["status" => "error", "message" => "Erreur lors de l'ajout du commentaire."]);
-            }
+            $data = $_POST;
+            $commentService = new CommentService();
+            $commentService->addComment($recipeId, $type, $data);
         }else{
             http_response_code(400);
             echo json_encode(["status" => "error", "message" => "Erreur lors de l'envoie du commentaire."]);
