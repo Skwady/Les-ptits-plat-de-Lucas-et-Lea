@@ -127,7 +127,7 @@
         <?= $contenu ?>
     </main>
 
-    <footer>
+    <footer class="mt-auto">
         <h3 class="text-center">&copy Copyright</h3>
     </footer>
 

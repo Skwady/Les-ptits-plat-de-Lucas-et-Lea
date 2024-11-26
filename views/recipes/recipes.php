@@ -27,7 +27,7 @@ $title = 'Liste des Recettes';
                         <p><?= nl2br($recipe->instructions) ?></p>
                     </div>
                 </div>
-                <?php if (isset($_SESSION['role']) == 'Admin'): ?>
+                <?php if (isset($_SESSION['role']) === 'Admin'): ?>
                     <div class="d-flex flex-end mb-8 gap-2">
                         <a href="/recipes/updateRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn">modifier</a>
                         <a href="/recipes/deleteRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>

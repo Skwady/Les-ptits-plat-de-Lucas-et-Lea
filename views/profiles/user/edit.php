@@ -13,7 +13,7 @@
         </div>
 
         <div class="mb-3 pt-3">
-            <label for="profile_picture">Photo de profile :</label>
+            <label for="profile_picture">Photo de profil :</label>
             <input type="file" id="profile_picture" name="profile_picture" value="<?= $user->profile_picture; ?>">
         </div>
 

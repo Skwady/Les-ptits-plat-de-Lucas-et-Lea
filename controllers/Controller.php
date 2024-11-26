@@ -28,5 +28,4 @@ abstract class Controller
 
         require_once ROOT . '/views/default.php';
     }
-
 }

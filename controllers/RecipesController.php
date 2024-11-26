@@ -35,7 +35,12 @@ class RecipesController extends Controller
         $comments = new CommentRepository();
         $comments->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id]);
 
-        $this->render('recipes/recipes', ['recipes' => $recipes, 'type' => $type, 'comments' => $comments]);
+        $this->render('recipes/recipes', 
+        [
+            'recipes' => $recipes, 
+            'type' => $type, 
+            'comments' => $comments
+        ]);
     }
 
     public function addRecipe()

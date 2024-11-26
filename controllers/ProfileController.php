@@ -6,6 +6,7 @@ use App\repository\ActivityRepository;
 use App\repository\ProfileRepository;
 use App\repository\FavoriteRepository;
 use App\repository\RecipeRepository;
+use App\repository\UsersRepository;
 use App\services\ActivityService;
 use App\services\CloudinaryService;
 use App\services\ProfileService;
@@ -18,46 +19,38 @@ class ProfileController extends Controller
      *
      * @param string $userId ID de l'utilisateur.
      */
-    public function activity(string $userId, int $limit = 10)
+    public function activity(string $userId, int $limit = 5)
     {
         $activityRepository = new ActivityRepository();
         // Récupérer les activités des utilisateurs
         $activities = $activityRepository->findBy('actu', [], [
-            'sort' => ['created_at' => -1], // Tri par date décroissante
-            'limit' => $limit
+            'sort' => ['created_at' => 1],
         ]);
+
+        $UsersRepository = new UsersRepository();
+        $profile = $UsersRepository->find($userId);
 
         // Rendre la vue du profil avec les activités
         $this->renderProfile('actu/activity', [
             'activities' => $activities,
-            'user_id' => $userId
+            'user_id' => $userId,
+            'profile' => $profile
         ]);
     }
 
     public function viewProfile($userId)
     {
         $profilerepository = new ProfileRepository();
-        $favoriterepository = new FavoriteRepository();
-        $reciperepository = new Reciperepository();
 
         // Charger les informations du profil
         $profile = $profilerepository->selectProfileByUserId($userId);
 
         // Vérifier si l'utilisateur est autorisé à voir ce profil
         if ($_SESSION['id'] == $userId || $_SESSION['role'] == 'Admin') {
-            // Charger les recettes favorites
-            $favorites = $favoriterepository->findBy(['user_id' => $userId]);
-
-            // Charger les détails des recettes favorites
-            $favoriteRecipes = [];
-            foreach ($favorites as $favorite) {
-                $favoriteRecipes[] = $reciperepository->find($favorite->recipe_id);
-            }
 
             // Rendre la vue du profil avec les données
             $this->renderProfile('user/profile', [
                 'profile' => $profile,
-                'favorites' => $favoriteRecipes,
                 'userId' => $userId
             ]);
         } else {
@@ -65,6 +58,26 @@ class ProfileController extends Controller
             header("Location: /profile/viewProfile/" . $_SESSION['id']);
             exit();
         }
+    }
+
+    public function viewRecipeFavorite($userId)
+    {
+        $favoriterepository = new FavoriteRepository();
+        $reciperepository = new Reciperepository();
+
+        // Charger les recettes favorites
+        $favorites = $favoriterepository->findBy(['user_id' => $userId]);
+
+        // Charger les détails des recettes favorites
+        $favoriteRecipes = [];
+        foreach ($favorites as $favorite) {
+            $favoriteRecipes[] = $reciperepository->find($favorite->recipe_id);
+        }
+
+        // Rendre la vue des recettes favorites
+        $this->renderProfile('user/recipeFavorite', [
+            'favorites' => $favoriteRecipes
+        ]);
     }
 
     public function publish()

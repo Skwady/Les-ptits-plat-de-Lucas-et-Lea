@@ -1,0 +1,58 @@
+/* Général */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+/* Conteneur centré */
+.profile-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Liste des activités */
+.activities ul {
+    padding: 0;
+    list-style: none;
+}
+
+.activities img {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+/* Barre de publication */
+textarea {
+    resize: none;
+    min-height: 50px;
+}
+
+#fileInput {
+    display: none;
+}
+
+#publishButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Bouton rond */
+    padding: 0;
+}
+
+#publishButton i {
+    font-size: 20px; /* Taille de l'icône */
+}
+
+/* Emoji Picker */
+#emojiPicker {
+    display: none;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    max-width: 500px;
+    max-height: 200px;
+    overflow-y: auto; /* Permet un défilement si nécessaire */
+}
