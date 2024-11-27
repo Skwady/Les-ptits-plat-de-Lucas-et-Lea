@@ -1,5 +1,4 @@
 vendor
 Procfile
 .env
-composer.lock
 config/php.ini
