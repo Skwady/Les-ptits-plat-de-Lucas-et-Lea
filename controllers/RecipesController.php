@@ -15,7 +15,8 @@ class RecipesController extends Controller
     public function listRecipes($type)
     {
         $recipeRepository = new RecipeRepository();
-        $userId = $_SESSION['id'] ?? null; // ID de l'utilisateur connecté, ou null si non connecté
+        $userId = $_SESSION['id'] ?? null;
+        $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'Admin';
 
         // Récupérer toutes les recettes par type
         $recipes = $recipeRepository->selectRecipeByType($type);
@@ -24,22 +25,22 @@ class RecipesController extends Controller
         $favoriteRepository = new FavoriteRepository();
         $commentRepository = new CommentRepository();
 
-        // Ajouter les informations supplémentaires pour chaque recette
         foreach ($recipes as $recipe) {
-            $recipe->like_count = $likeRepository->countLikes($recipe->id); // Nombre de likes
+            $recipe->like_count = $likeRepository->countLikes($recipe->id);
             $recipe->is_favorited = $userId ? $favoriteRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id]) : false;
             $recipe->is_liked = $userId ? !empty($likeRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
-            $recipe->is_comment = $userId ? !empty($commentRepository->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id])) : false;
+
+            $comments = $commentRepository->findBy(['recipe_id' => $recipe->id]);
+            foreach ($comments as &$comment) {
+                $comment->is_own_comment = $comment->user_id === $userId;
+            }
+            $recipe->comments = $comments;
         }
 
-        $comments = new CommentRepository();
-        $comments->findBy(['user_id' => $userId, 'recipe_id' => $recipe->id]);
-
-        $this->render('recipes/recipes', 
-        [
-            'recipes' => $recipes, 
-            'type' => $type, 
-            'comments' => $comments
+        $this->render('recipes/recipes', [
+            'recipes' => $recipes,
+            'type' => $type,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -88,4 +89,19 @@ class RecipesController extends Controller
         header("Location: /recipes/listRecipes/$type");
         exit();
     }
+
+    public function viewRecipe($id)
+    {
+        $recipeRepository = new RecipeRepository();
+        $recipe = $recipeRepository->find($id);
+
+        if (!$recipe) {
+            http_response_code(404);
+            echo "Recette introuvable.";
+            exit();
+        }
+
+        $this->render('recipes/view', ['recipe' => $recipe]);
+    }
+
 }

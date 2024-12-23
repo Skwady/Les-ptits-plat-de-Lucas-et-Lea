@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/default.css">
     <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/<?php if (isset($link)) {echo $link;} ?>.css">
+    <?php if (isset($link)):?> <link rel="stylesheet" href="/assets/css/<?= $link ?>.css"><?php endif; ?>
     <title><?php if (isset($title)) {echo $title;} ?></title>
 </head>
 
@@ -128,11 +128,98 @@
     </main>
 
     <footer class="mt-auto">
-        <h3 class="text-center">&copy Copyright</h3>
-    </footer>
+        <div>
+            <h3 class="text-center tw">&copy Copyright</h3>
+        </div>
+    <!-- Lien pour ouvrir la modal -->
+    <a class="tw" href="#" data-bs-toggle="modal" data-bs-target="#legalModal">Voir les CGU, Mentions légales et RGPD</a>
 
-    <script src="<?php if (isset($script)) {echo '/assets/js/'.$script.'.js';} ?>"></script>
-    <script src="<?php if (isset($scripts)) {echo '/assets/js/'.$scripts.'.js';} ?>"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="legalModal" tabindex="-1" aria-labelledby="legalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title tb" id="legalModalLabel">Informations légales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Navigation avec onglets -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="cgu-tab" data-bs-toggle="tab" data-bs-target="#cgu" type="button" role="tab" aria-controls="cgu" aria-selected="true">
+                                CGU
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="mentions-tab" data-bs-toggle="tab" data-bs-target="#mentions" type="button" role="tab" aria-controls="mentions" aria-selected="false">
+                                Mentions Légales
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="rgpd-tab" data-bs-toggle="tab" data-bs-target="#rgpd" type="button" role="tab" aria-controls="rgpd" aria-selected="false">
+                                RGPD
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Contenu des onglets -->
+                    <div class="tab-content mt-3" id="myTabContent">
+                        <!-- CGU -->
+                        <div class="tab-pane fade show active tb" id="cgu" role="tabpanel" aria-labelledby="cgu-tab">
+                            <h6 class="tb">Conditions Générales d'Utilisation</h6>
+                            <p class="tb">
+                                Bienvenue sur notre site de petits plats ! En utilisant ce site, vous acceptez les conditions suivantes :
+                            </p>
+                            <ul>
+                                <li class="tb">Les informations fournies sur ce site sont à titre indicatif et peuvent être modifiées à tout moment.</li>
+                                <li class="tb">Vous vous engagez à utiliser le site de manière responsable et à ne pas nuire à son bon fonctionnement.</li>
+                                <li class="tb">Les photos et descriptions des plats sont non contractuelles.</li>
+                            </ul>
+                            <p class="tb">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
+                        </div>
+
+                        <!-- Mentions légales -->
+                        <div class="tab-pane fade" id="mentions" role="tabpanel" aria-labelledby="mentions-tab">
+                            <h6 class="tb">Mentions Légales</h6>
+                            <p class="tb">
+                                <strong>Nom du site :</strong>Les p'tits Plats de Lucas et Léa<br>
+                                <strong>Propriétaire :</strong>Y.V.<br>
+                                <strong>Adresse :</strong> Adresse du proprio<br>
+                                <strong>Contact :</strong> contact@petitsplatsgourmands.com<br>
+                                <strong>Hébergeur :</strong> Héroku
+                            </p>
+                        </div>
+
+                        <!-- RGPD -->
+                        <div class="tab-pane fade" id="rgpd" role="tabpanel" aria-labelledby="rgpd-tab">
+                            <h6 class="tb">Règlement Général sur la Protection des Données (RGPD)</h6>
+                            <p class="tb">
+                                Nous respectons votre vie privée. Les données collectées sur ce site (exemple : formulaire de contact) sont utilisées uniquement pour répondre à vos demandes ou améliorer nos services.
+                            </p>
+                            <p class="tb">
+                                <strong>Données collectées :</strong> Nom, prénom, email.<br>
+                                <strong>Finalité :</strong> Répondre aux demandes des utilisateurs.<br>
+                                <strong>Durée de conservation :</strong> 1 an après la dernière interaction.
+                            </p>
+                            <p class="tb">
+                                Vous pouvez exercer vos droits (accès, rectification, suppression) en nous contactant à l'adresse suivante : contact@lespetitsplats.com.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+    <?php if (isset($script)) : ?>
+    <script src=" <?= '/assets/js/'.$script.'.js' ?>"></script>
+    <?php endif; ?>
+    <?php if (isset($scripts)) : ?>
+    <script src="<?= '/assets/js/'.$scripts.'.js' ?>"></script>
+    <?php endif; ?>
     <script src="/assets/js/fetchPost.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

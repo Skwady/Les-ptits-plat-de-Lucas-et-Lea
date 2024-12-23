@@ -27,7 +27,7 @@ $title = 'Liste des Recettes';
                         <p><?= nl2br($recipe->instructions) ?></p>
                     </div>
                 </div>
-                <?php if (isset($_SESSION['role']) === 'Admin'): ?>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
                     <div class="d-flex flex-end mb-8 gap-2">
                         <a href="/recipes/updateRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn">modifier</a>
                         <a href="/recipes/deleteRecipe/<?= $recipe->id ?>/<?= $recipe->type_id ?>" class="btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?')">Supprimer</a>
@@ -53,7 +53,9 @@ $title = 'Liste des Recettes';
                         <?php endif; ?>
                     <?php endif; ?>
                     <a href="/comment/addComment/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-solid fa-comment heart-gradient"></i></a>
-                    <a href="/comment/removeComment/<?= $recipe->id ?>/<?= $recipe->type_id ?>"><i class="fa-solid fa-share-nodes heart-gradient fill"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#shareModal" onclick="prepareShareModal('<?= $recipe->id ?>', '<?= $recipe->title ?>')">
+                        <i class="fa-solid fa-share-nodes heart-gradient fill"></i>
+                    </a>
                 </div>
 
                 <?php
@@ -61,12 +63,19 @@ $title = 'Liste des Recettes';
                 ?>
                 <!-- Scrollable Comments Section -->
                 <div class="comments-container mt-3">
-                    <?php if (!empty($comments)): ?>
+                    <?php if (!empty($recipe->comments)): ?>
                         <div class="scrollable-comments">
-                            <?php foreach ($comments as $comment): ?>
-                                <div class="card mt-2">
+                            <?php foreach ($recipe->comments as $comment): ?>
+                                <div class="card mt-2 position-relative">
+                                    <!-- Bouton de suppression -->
+                                    <?php if ($isAdmin || $comment->is_own_comment): ?>
+                                        <a href="/comment/removeComment/<?= $comment->id ?>/<?= $recipe->id ?>/<?= $recipe->type_id ?>"
+                                        class="btn-close position-absolute top-0 end-0 me-2 mt-2"
+                                        aria-label="Supprimer"
+                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')"></a>
+                                    <?php endif; ?>
                                     <div class="card-body">
-                                        <p><?= htmlspecialchars($comment) ?></p>
+                                        <p><?= htmlspecialchars($comment->content) ?></p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -90,6 +99,42 @@ $title = 'Liste des Recettes';
         </div>
     </div>
 <?php endforeach; ?>
+
+<!-- Modal de partage -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">Partager la recette</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <p>Choisissez une méthode pour partager cette recette :</p>
+                <div class="d-flex justify-content-evenly">
+                    <!-- Partage sur Facebook -->
+                    <a id="share-facebook" href="#" target="_blank" class="btn btn-outline-info">
+                        <i class="fa-brands fa-facebook"></i> Facebook
+                    </a>
+
+                    <!-- Partage sur Twitter -->
+                    <a id="share-twitter" href="#" target="_blank" class="btn btn-outline-info">
+                        <i class="fa-brands fa-twitter"></i> Twitter
+                    </a>
+
+                    <!-- Partage sur WhatsApp -->
+                    <a id="share-whatsapp" href="#" target="_blank" class="btn btn-outline-info">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+                <div class="mt-3">
+                    <p>Ou copiez le lien :</p>
+                    <input type="text" class="form-control" id="share-link" readonly>
+                    <button class="btn btn-outline-info mt-2" onclick="copyToClipboard()">Copier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php $script = 'recipesTime'; ?>
 <?php $scripts = 'comment'; ?>

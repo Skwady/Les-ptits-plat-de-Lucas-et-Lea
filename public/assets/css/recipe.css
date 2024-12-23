@@ -133,3 +133,15 @@
 .comments-container::-webkit-scrollbar-thumb:hover {
     background-color: #999;
 }
+
+.modal-content {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+.modal-body {
+    text-align: center;
+}

@@ -1,24 +1,41 @@
-<section class="container">
-    <h2 class="text-center">Modifier le Profil</h2>
-    <form method="POST" action="/profile/updateProfile/<?= $_SESSION['id'] ?>" enctype="multipart/form-data">
-        
-        <div class="mb-3 pt-3">
-            <label for="date_of_birth">Date de naissance :</label>
-            <input type="date" id="date_of_birth" name="date_of_birth" value="<?= $user->date_of_birth; ?>">
+<section class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Modifier le Profil</h2>
         </div>
-        
-        <div class="mb-3 pt-3">
-            <label for="bio">Bio :</label>
-            <textarea id="bio" name="bio"><?= $user->bio; ?></textarea>
-        </div>
+        <div class="card-body">
+            <form method="POST" action="/profile/updateProfile/<?= $_SESSION['id'] ?>" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <!-- Date de naissance -->
+                <div class="mb-3">
+                    <label for="date_of_birth" class="form-label">Date de naissance :</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="<?= $profile->date_of_birth; ?>" required>
+                    <div class="invalid-feedback">Veuillez sélectionner une date valide.</div>
+                </div>
 
-        <div class="mb-3 pt-3">
-            <label for="profile_picture">Photo de profil :</label>
-            <input type="file" id="profile_picture" name="profile_picture" value="<?= $user->profile_picture; ?>">
-        </div>
+                <!-- Bio -->
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Bio :</label>
+                    <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="Parlez un peu de vous..."><?= $profile->bio; ?></textarea>
+                </div>
 
-        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-        <button type="submit" class="btn btn-primary mb-4">Modifier</button>
-    </form>
-    <div id="error-message" class="alert alert-danger mt-4 mb-4" role="alert"></div>
+                <!-- Photo de profil -->
+                <div class="mb-3">
+                    <label for="profile_picture" class="form-label">Photo de profil :</label>
+                    <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
+                    <div class="form-text">Formats acceptés : JPEG, PNG.</div>
+                </div>
+
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+                <!-- Bouton de soumission -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </div>
+            </form>
+            <div id="error-message" class="alert alert-danger mt-4 d-none" role="alert">
+                Une erreur est survenue. Veuillez réessayer.
+            </div>
+        </div>
+    </div>
 </section>

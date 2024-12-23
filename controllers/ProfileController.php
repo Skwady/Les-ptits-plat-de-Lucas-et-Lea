@@ -27,8 +27,8 @@ class ProfileController extends Controller
             'sort' => ['created_at' => 1],
         ]);
 
-        $UsersRepository = new UsersRepository();
-        $profile = $UsersRepository->find($userId);
+        $profilerepository = new ProfileRepository();
+        $profile = $profilerepository->selectProfileByUserId($userId);
 
         // Rendre la vue du profil avec les activités
         $this->renderProfile('actu/activity', [
@@ -64,6 +64,9 @@ class ProfileController extends Controller
     {
         $favoriterepository = new FavoriteRepository();
         $reciperepository = new Reciperepository();
+        $profilerepository = new ProfileRepository();
+
+        $profile = $profilerepository->selectProfileByUserId($userId);
 
         // Charger les recettes favorites
         $favorites = $favoriterepository->findBy(['user_id' => $userId]);
@@ -76,7 +79,8 @@ class ProfileController extends Controller
 
         // Rendre la vue des recettes favorites
         $this->renderProfile('user/recipeFavorite', [
-            'favorites' => $favoriteRecipes
+            'favorites' => $favoriteRecipes,
+            'profile' => $profile
         ]);
     }
 
@@ -146,7 +150,7 @@ class ProfileController extends Controller
 
         // Récupération des données du profil pour affichage
         $profileRepository = new ProfileRepository();
-        $user = $profileRepository->selectProfileByUserId($userId);
-        $this->renderProfile('user/edit', ['user' => $user]);
+        $profile = $profileRepository->selectProfileByUserId($userId);
+        $this->renderProfile('user/edit', ['profile' => $profile]);
     }
 }

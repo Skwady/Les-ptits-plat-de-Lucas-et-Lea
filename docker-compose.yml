@@ -4,9 +4,9 @@ services:
   app:
     build:
       context: .
-    container_name: my-php-container
+    container_name: lesptitplats-php-lesPtitsPlats
     ports:
-      - "8080:80"  # Accéder à l'application via localhost:8080
+      - "8000:80"  # Accéder à l'application via localhost:8080
     env_file:
       - .env       # Charger les variables d'environnement
     depends_on:
@@ -17,7 +17,7 @@ services:
 
   db:
     image: mariadb:10.11
-    container_name: my-db-container
+    container_name: lesptitplats-db-lesPtitsPlats
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -25,7 +25,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -33,13 +33,13 @@ services:
 
   mongo:
     image: mongo:6.0
-    container_name: my-mongo-container
+    container_name: lesptitplats-mongo-lesPtitsPlats
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongo_data:/data/db
     networks:
