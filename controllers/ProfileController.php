@@ -6,7 +6,6 @@ use App\repository\ActivityRepository;
 use App\repository\ProfileRepository;
 use App\repository\FavoriteRepository;
 use App\repository\RecipeRepository;
-use App\repository\UsersRepository;
 use App\services\ActivityService;
 use App\services\CloudinaryService;
 use App\services\ProfileService;
@@ -19,7 +18,7 @@ class ProfileController extends Controller
      *
      * @param string $userId ID de l'utilisateur.
      */
-    public function activity(string $userId, int $limit = 5)
+    public function activity(string $userId)
     {
         $activityRepository = new ActivityRepository();
         // Récupérer les activités des utilisateurs
@@ -30,12 +29,16 @@ class ProfileController extends Controller
         $profilerepository = new ProfileRepository();
         $profile = $profilerepository->selectProfileByUserId($userId);
 
-        // Rendre la vue du profil avec les activités
-        $this->renderProfile('actu/activity', [
-            'activities' => $activities,
-            'user_id' => $userId,
-            'profile' => $profile
-        ]);
+        if (isset($_SESSION['id'])) {
+            // Rendre la vue du profil avec les activités
+            $this->renderProfile('actu/activity', [
+                'activities' => $activities,
+                'user_id' => $userId,
+                'profile' => $profile
+            ]);
+        } else {
+            http_response_code(404);
+        }
     }
 
     public function viewProfile($userId)
@@ -45,18 +48,22 @@ class ProfileController extends Controller
         // Charger les informations du profil
         $profile = $profilerepository->selectProfileByUserId($userId);
 
-        // Vérifier si l'utilisateur est autorisé à voir ce profil
-        if ($_SESSION['id'] == $userId || $_SESSION['role'] == 'Admin') {
+        if (isset($_SESSION['id'])) {
+            // Vérifier si l'utilisateur est autorisé à voir ce profil
+            if ($_SESSION['id'] == $userId || $_SESSION['role'] == 'Admin') {
 
-            // Rendre la vue du profil avec les données
-            $this->renderProfile('user/profile', [
-                'profile' => $profile,
-                'userId' => $userId
-            ]);
+                // Rendre la vue du profil avec les données
+                $this->renderProfile('user/profile', [
+                    'profile' => $profile,
+                    'userId' => $userId
+                ]);
+            } else {
+                // Redirection vers le profil de l'utilisateur connecté
+                header("Location: /profile/viewProfile/" . $_SESSION['id']);
+                exit();
+            }
         } else {
-            // Redirection vers le profil de l'utilisateur connecté
-            header("Location: /profile/viewProfile/" . $_SESSION['id']);
-            exit();
+            http_response_code(404);
         }
     }
 
@@ -77,11 +84,15 @@ class ProfileController extends Controller
             $favoriteRecipes[] = $reciperepository->find($favorite->recipe_id);
         }
 
-        // Rendre la vue des recettes favorites
-        $this->renderProfile('user/recipeFavorite', [
-            'favorites' => $favoriteRecipes,
-            'profile' => $profile
-        ]);
+        if (isset($_SESSION['id'])) {
+            // Rendre la vue des recettes favorites
+            $this->renderProfile('user/recipeFavorite', [
+                'favorites' => $favoriteRecipes,
+                'profile' => $profile
+            ]);
+        } else {
+            http_response_code(404);
+        }
     }
 
     public function publish()
@@ -148,9 +159,13 @@ class ProfileController extends Controller
             exit();
         }
 
-        // Récupération des données du profil pour affichage
-        $profileRepository = new ProfileRepository();
-        $profile = $profileRepository->selectProfileByUserId($userId);
-        $this->renderProfile('user/edit', ['profile' => $profile]);
+        if (isset($_SESSION['id'])) {
+            // Récupération des données du profil pour affichage
+            $profileRepository = new ProfileRepository();
+            $profile = $profileRepository->selectProfileByUserId($userId);
+            $this->renderProfile('user/edit', ['profile' => $profile]);
+        } else {
+            http_response_code(404);
+        }
     }
 }

@@ -5,7 +5,7 @@
             <!-- Photo de profil (affichée uniquement si disponible) -->
             <?php if (!empty($profile->profile_picture)): ?>
                 <div class="text-center pdp mb-3">
-                    <img src="<?= $profile->profile_picture ?>" class="img-fluid  " alt="Photo de profil">
+                    <img src="<?= $profile->profile_picture ?>" class="img-fluid rounded" alt="Photo de profil">
                 </div>
             <?php endif; ?>
             <!-- Bouton toggle pour mobile -->
