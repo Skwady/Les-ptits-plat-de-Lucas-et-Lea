@@ -139,7 +139,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title tb" id="legalModalLabel">Informations légales</h5>
+                    <h5 class="modal-title tw" id="legalModalLabel">Informations légales</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -165,23 +165,23 @@
                     <!-- Contenu des onglets -->
                     <div class="tab-content mt-3" id="myTabContent">
                         <!-- CGU -->
-                        <div class="tab-pane fade show active tb" id="cgu" role="tabpanel" aria-labelledby="cgu-tab">
-                            <h6 class="tb">Conditions Générales d'Utilisation</h6>
-                            <p class="tb">
+                        <div class="tab-pane fade show active tw" id="cgu" role="tabpanel" aria-labelledby="cgu-tab">
+                            <h6 class="tw">Conditions Générales d'Utilisation</h6>
+                            <p class="tw">
                                 Bienvenue sur notre site de petits plats ! En utilisant ce site, vous acceptez les conditions suivantes :
                             </p>
                             <ul>
-                                <li class="tb">Les informations fournies sur ce site sont à titre indicatif et peuvent être modifiées à tout moment.</li>
-                                <li class="tb">Vous vous engagez à utiliser le site de manière responsable et à ne pas nuire à son bon fonctionnement.</li>
-                                <li class="tb">Les photos et descriptions des plats sont non contractuelles.</li>
+                                <li class="tw">Les informations fournies sur ce site sont à titre indicatif et peuvent être modifiées à tout moment.</li>
+                                <li class="tw">Vous vous engagez à utiliser le site de manière responsable et à ne pas nuire à son bon fonctionnement.</li>
+                                <li class="tw">Les photos et descriptions des plats sont non contractuelles.</li>
                             </ul>
-                            <p class="tb">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
+                            <p class="tw">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
                         </div>
 
                         <!-- Mentions légales -->
                         <div class="tab-pane fade" id="mentions" role="tabpanel" aria-labelledby="mentions-tab">
-                            <h6 class="tb">Mentions Légales</h6>
-                            <p class="tb">
+                            <h6 class="tw">Mentions Légales</h6>
+                            <p class="tw">
                                 <strong>Nom du site :</strong>Les p'tits Plats de Lucas et Léa<br>
                                 <strong>Propriétaire :</strong>Y.V.<br>
                                 <strong>Adresse :</strong> Adresse du proprio<br>
@@ -192,16 +192,16 @@
 
                         <!-- RGPD -->
                         <div class="tab-pane fade" id="rgpd" role="tabpanel" aria-labelledby="rgpd-tab">
-                            <h6 class="tb">Règlement Général sur la Protection des Données (RGPD)</h6>
-                            <p class="tb">
+                            <h6 class="tw">Règlement Général sur la Protection des Données (RGPD)</h6>
+                            <p class="tw">
                                 Nous respectons votre vie privée. Les données collectées sur ce site (exemple : formulaire de contact) sont utilisées uniquement pour répondre à vos demandes ou améliorer nos services.
                             </p>
-                            <p class="tb">
+                            <p class="tw">
                                 <strong>Données collectées :</strong> Nom, prénom, email.<br>
                                 <strong>Finalité :</strong> Répondre aux demandes des utilisateurs.<br>
                                 <strong>Durée de conservation :</strong> 1 an après la dernière interaction.
                             </p>
-                            <p class="tb">
+                            <p class="tw">
                                 Vous pouvez exercer vos droits (accès, rectification, suppression) en nous contactant à l'adresse suivante : contact@lespetitsplats.com.
                             </p>
                         </div>
