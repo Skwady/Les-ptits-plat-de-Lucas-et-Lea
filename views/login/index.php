@@ -1,5 +1,6 @@
 <?php
 $link = 'main';
+$links = 'password';
 $title = 'Login';
 ?>
 
@@ -11,11 +12,13 @@ $title = 'Login';
         <form method="POST" class="p-3" id="loginForm" action="/login/conect" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="email">Email :</label>
-                <input type="email" name="email" id="email" class="form-control mb-3">
+                <input type="email" name="email" id="email" class="form-control mb-3" required>
             </div>
-            <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <input type="password" name="password" id="password" class="form-control mb-3">
+            <div class="form-group mb-3">
+            <div class="input-container">
+                <input type="password" id="password" name="password" class="form-control" required>
+                <span class="toggle-password" id="togglePassword">👁️</span>
+            </div>
             </div>
             <div class="formLogin">
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -26,3 +29,6 @@ $title = 'Login';
         <div id="error-message" class="alert alert-danger" role="alert"></div>
     </div>    
 </section>
+
+<?php
+$script = "password";

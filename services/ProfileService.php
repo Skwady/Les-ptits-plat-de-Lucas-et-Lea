@@ -21,13 +21,18 @@ class ProfileService
 
         // Hydrater et mettre à jour
         $profileModel->hydrate($updateData);
-        $isUpdated = $profileRepository->update($userId, $updateData);
-
-        // Retourner le statut de la mise à jour
-        if ($isUpdated) {
-            return ['status' => 'success', 'redirect' => "/profile/viewProfile/$userId"];
-        } else {
-            return ['status' => 'error', 'message' => 'Échec de la mise à jour du profil'];
+        
+        $idProfile = $profileRepository->findBy(["user_id" => $userId]);
+        foreach ($idProfile as $id) {
+            // Mettre à jour le profil
+            $isUpdated = $profileRepository->update($id->id, $updateData);
+            
+            // Retourner le statut de la mise à jour
+            if ($isUpdated) {
+                return ['status' => 'success', 'redirect' => "/profile/viewProfile/$userId"];
+            } else {
+                return ['status' => 'error', 'message' => 'Échec de la mise à jour du profil'];
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/assets/css/default.css">
     <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
     <?php if (isset($link)):?> <link rel="stylesheet" href="/assets/css/<?= $link ?>.css"><?php endif; ?>
+    <?php if (isset($links)):?> <link rel="stylesheet" href="/assets/css/<?= $links ?>.css"><?php endif; ?>
     <title><?php if (isset($title)) {echo $title;} ?></title>
 </head>
 
