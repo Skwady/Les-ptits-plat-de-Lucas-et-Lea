@@ -49,13 +49,13 @@
             <form method="POST" action="/users/updateUser/<?= $_SESSION['id'] ?>" enctype="multipart/form-data" class="needs-validation" novalidate>
                 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nom ou pseudo :</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?= $user->name ?>">
+                    <label for="name" class="form-label">Prenom ou pseudo :</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $user->firstname ?? null; ?>">
                 </div>
 
                 <div class="mb-3">
-                    <label for="firstname" class="form-label">Prenom : (facultatif)</label>
-                    <input class="form-control" id="firstname" name="firstname" value="<?= $user->firstname ?? null; ?>">
+                    <label for="firstname" class="form-label">Nom : (facultatif)</label>
+                    <input class="form-control" id="firstname" name="firstname" value="<?= $user->name ?>">
                 </div>
 
                 <div class="mb-3">

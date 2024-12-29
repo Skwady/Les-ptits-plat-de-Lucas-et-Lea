@@ -38,7 +38,7 @@ class ProfileController extends Controller
                     }
                 }
 
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']) && $_SESSION['id'] == $userId) {
             // Rendre la vue du profil avec les activités
             if(isset($name)){
                 $this->renderProfile('actu/activity', [
@@ -102,7 +102,7 @@ class ProfileController extends Controller
             $favoriteRecipes[] = $reciperepository->find($favorite->recipe_id);
         }
 
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']) && $_SESSION['id'] == $userId) {
             // Rendre la vue des recettes favorites
             $this->renderProfile('user/recipeFavorite', [
                 'favorites' => $favoriteRecipes,

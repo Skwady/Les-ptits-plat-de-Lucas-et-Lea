@@ -9,9 +9,9 @@
         </div>
         <div class="card-body">
             <!-- Nom -->
-            <p><strong>Nom :</strong> <?= $profile->name ?></p>
+            <p><strong>Prénom / Pseudo :</strong> <?= $profile->firstname ?></p>
             <!-- Prénom -->
-            <p><strong>Prénom :</strong> <?= $profile->firstname ?></p>
+            <p><strong>Nom :</strong> <?= $profile->name ?></p>
             <!-- Email -->
             <p><strong>Email :</strong> <?= $profile->email ?></p>
             <!-- Date de naissance (affichée uniquement si disponible) -->
