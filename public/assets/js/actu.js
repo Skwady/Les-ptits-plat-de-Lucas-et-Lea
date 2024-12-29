@@ -80,4 +80,38 @@ document.addEventListener('DOMContentLoaded', () => {
             emojiPicker.style.display = 'none';
         }
     });
+
+    document.addEventListener('input', function(e) {
+        if (e.target.tagName === 'TEXTAREA') {
+            const textarea = e.target;
+            textarea.style.height = 'auto'; // Réinitialise la hauteur pour recalculer
+            textarea.style.height = textarea.scrollHeight + 'px'; // Ajuste à la hauteur du contenu
+        }
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const files = event.target.files; // Récupère les fichiers sélectionnés
+        const previewContainer = document.getElementById('imagePreviewContainer');
+
+        // Supprime les anciens aperçus en supprimant directement les enfants
+        while (previewContainer.firstChild) {
+            previewContainer.removeChild(previewContainer.firstChild);
+        }
+
+        // Parcourir chaque fichier sélectionné
+        Array.from(files).forEach(file => {
+            if (file.type.startsWith('image/')) { // Vérifie si le fichier est une image
+                const reader = new FileReader();
+
+                // Événement de chargement du fichier
+                reader.onload = function(e) {
+                    const img = document.createElement('img'); // Crée un élément image
+                    img.src = e.target.result; // Utilise le contenu de l'image
+                    previewContainer.appendChild(img); // Ajoute l'image dans le conteneur d'aperçu
+                };
+
+                reader.readAsDataURL(file); // Lit le contenu de l'image
+            }
+        });
+    });    
 });

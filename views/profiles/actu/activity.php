@@ -9,8 +9,8 @@ $title = 'Fil d\'actualité';
             <ul class="list-group">
                 <?php foreach ($activities as $activity): ?>
                     <li class="list-group-item mb-3 position-relative">
-                        <p><?= htmlspecialchars($name); ?></p>
-                        <p><?= htmlspecialchars($activity['message'] ?? ''); ?></p>
+                        <p><?= $name; ?></p>
+                        <p><?= nl2br($activity['message'] ?? ''); ?></p>
                         <?php
                         $imageUrls = $activity['image_url'] instanceof MongoDB\Model\BSONArray
                             ? $activity['image_url']->getArrayCopy()
@@ -19,7 +19,7 @@ $title = 'Fil d\'actualité';
                         <?php if (!empty($imageUrls)): ?>
                             <div class="mb-3">
                                 <?php foreach ($imageUrls as $image): ?>
-                                    <img src="<?= htmlspecialchars($image); ?>" alt="Image associée" class="img-fluid rounded mb-2">
+                                    <img src="<?= $image; ?>" alt="Image associée" class="img-fluid rounded mb-2">
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
@@ -43,8 +43,8 @@ $title = 'Fil d\'actualité';
                 <form method="POST" action="/profile/publish" enctype="multipart/form-data" data-refresh-target=".activities">
                     <div class="card-body d-flex align-items-center">
                         <!-- Zone de texte -->
-                        <textarea class="form-control me-3" name="message" id="message" rows="2" placeholder="Écrivez un message..." required></textarea>
-
+                        <textarea class="form-control me-3" name="message" id="message autoResize" rows="2" placeholder="Écrivez un message..." required></textarea>
+                        
                         <!-- Icône d'ajout de fichier -->
                         <label for="fileInput" class="btn btn-outline-secondary me-3">
                             <i class="fas fa-paperclip"></i>
@@ -67,6 +67,7 @@ $title = 'Fil d\'actualité';
                         </div>
                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     </div>
+                    <div id="imagePreviewContainer"></div>
                 </form>
             </div>
             <div id="error-message" class="alert alert-danger" role="alert"></div>

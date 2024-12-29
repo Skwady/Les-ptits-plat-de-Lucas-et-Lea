@@ -153,11 +153,19 @@ class ProfileController extends Controller
             exit();
         }
 
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']) && $_SESSION['id'] == $userId) {
             // Récupération des données du profil pour affichage
+
             $profileRepository = new ProfileRepository();
+            $userrepository = new UsersRepository();
+
+            $user = $userrepository->find($userId);
             $profile = $profileRepository->selectProfileByUserId($userId);
-            $this->renderProfile('user/edit', ['profile' => $profile]);
+
+            $this->renderProfile('user/edit', [
+                'profile' => $profile,
+                'user' => $user,
+            ]);
         } else {
             http_response_code(404);
         }
@@ -170,6 +178,7 @@ class ProfileController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
             $activityService = new ActivityService();
             $activityService->deleteComment();
+            exit();
         }
 
         echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée.']);

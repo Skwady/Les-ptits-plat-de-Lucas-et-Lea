@@ -39,3 +39,41 @@
         </div>
     </div>
 </section>
+
+<section class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Informations personnelles</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/users/updateUser/<?= $_SESSION['id'] ?>" enctype="multipart/form-data" class="needs-validation" novalidate>
+                
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom ou pseudo :</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $user->name ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">Prenom : (facultatif)</label>
+                    <input class="form-control" id="firstname" name="firstname" value="<?= $user->firstname ?? null; ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email : </label>
+                    <input class="form-control" id="email" name="email" value="<?=$user->email;?>">
+                </div>
+
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+                <!-- Bouton de soumission -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </div>
+            </form>
+            <div id="error-message" class="alert alert-danger mt-4 d-none" role="alert">
+                Une erreur est survenue. Veuillez réessayer.
+            </div>
+        </div>
+    </div>
+</section>

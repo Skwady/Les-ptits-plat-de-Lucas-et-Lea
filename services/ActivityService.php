@@ -85,10 +85,12 @@ class ActivityService
         // Suppression du commentaire
         $deletedCount = $baseMongo->delete('actu', ['_id' => new \MongoDB\BSON\ObjectId($commentId)]);
 
-        if ($deletedCount > 0) {
+        if ($deletedCount) {
             echo json_encode(['status' => 'success', 'message' => 'Commentaire supprimé avec succès.']);
+            exit();
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Erreur lors de la suppression.']);
+            exit();
         }
     }
 }
