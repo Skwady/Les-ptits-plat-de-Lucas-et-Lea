@@ -11,29 +11,31 @@ $title = "Accueil";
 
     <div class="container bg-gradiant text-center p-5 tw foreground">
         <h3 class="pt-3 pb-3">
-            Bienvenue sur notre blog culinaire, où la cuisine rime avec complicité et souvenirs d'enfance !
+            Bienvenue chez nous, où préparer de bons plats devient un jeu d’enfant et une aventure familiale !
         </h3>
         <div>
             <h5 id="description">
-                Nous sommes Lucas et Léa, frère et sœur, tous deux passionnés de cuisine depuis aussi loin que nous nous souvenions! 
+                Nous sommes Lucas et Léa, frère et sœur, âgés respectivement de 7 et 3 ans, et déjà passionnés par la cuisine, une aventure que nous partageons en famille. 
                 <span id="dots1">...</span>
                 <span id="more1">
                     <br><br>
-                    Notre amour pour les petits plats savoureux et réconfortants, nous le devons à notre maman. Elle nous a initiés très jeunes, nous laissant mélanger, goûter, sentir, et découvrir le bonheur de mettre les mains à la pâte!
+                    Notre amour pour les petits plats savoureux et réconfortants vient de notre maman, qui nous initie chaque jour à son univers culinaire. Elle nous laisse mélanger, goûter, sentir, et découvrir la joie de mettre les mains à la pâte. Grâce à elle, cuisiner est devenu pour nous un jeu et une découverte.
                     <br><br>
-                    Les dimanches après-midi étaient pour nous des rituels sacrés où la cuisine devenait un terrain de jeux et d'apprentissages. Que ce soit en préparant des gâteaux moelleux pour l’heure du goûter ou des plats mijotés réconfortants pour les dîners de famille, chaque recette était une occasion de créer des souvenirs ensemble.
+                    Les dimanches après-midi sont des moments privilégiés où la cuisine se transforme en terrain d'exploration. Que ce soit en préparant des gâteaux moelleux pour l’heure du goûter ou des plats mijotés pour les repas en famille, chaque recette est une nouvelle occasion de créer des souvenirs inoubliables.
                     <br><br>
-                    Aujourd’hui, cette passion est devenue notre aventure commune. Nous avons décidé de lancer ce blog pour partager avec vous nos recettes favorites, celles qui ont marqué notre enfance et celles que nous avons perfectionnées au fil des années.
+                    Aujourd’hui, nous avons décidé de partager cette passion à travers ce blog. Avec l’aide précieuse de notre maman, qui veille dans l’ombre au bon fonctionnement du site, nous vous proposons nos recettes préférées, celles qui remplissent notre maison de délicieuses odeurs et de bonne humeur.
                     <br><br>
-                    Mais ce n'est pas tout ! Nous souhaitons aussi vous offrir de nombreux conseils et astuces pour cuisiner facilement, même si vous débutez. Notre mission est de rendre la cuisine accessible à tous, sans jamais sacrifier le plaisir du goût et des saveurs.
+                    Mais ce n'est pas tout ! Nous souhaitons aussi vous offrir de nombreux conseils et astuces pour cuisiner facilement, même si vous débutez. Notre mission est de rendre la cuisine amusante et accessible à tous, sans jamais sacrifier le plaisir des saveurs et du partage.
                     <br><br>
-                    Lucas, avec son amour pour les plats salés, aime partager des recettes originales et modernes, tout en revisitant les classiques qui ont bercé notre enfance. Quant à Léa, elle est la pâtissière de la famille, toujours prête à essayer de nouvelles recettes sucrées, des plus simples aux plus sophistiquées. Nous formons une équipe complémentaire, prête à explorer ensemble chaque coin de la cuisine, et nous espérons que vous nous accompagnerez dans cette aventure.
+                    Lucas, curieux et créatif, adore expérimenter avec des plats salés et revisiter les classiques de notre enfance. Léa, quant à elle, est notre apprentie pâtissière, toujours prête à aider et à goûter les nouvelles créations sucrées. Ensemble, nous formons une petite équipe dynamique et complémentaire, prête à vous embarquer dans notre aventure culinaire.
                     <br><br>
-                    Sur notre blog, vous trouverez des recettes gourmandes pour toutes les occasions, des plats express pour les soirs de semaine aux repas festifs pour impressionner vos proches. Nous vous guiderons pas à pas, avec des conseils pratiques et des astuces que nous avons accumulés avec les années. Et ce n'est pas tout : chaque recette est interactive ! Vous pouvez laisser un commentaire pour partager votre avis après avoir testé un plat, proposer des astuces ou des variantes qui fonctionnent pour vous, ou simplement dire combien vous avez apprécié la recette. Nous voulons que cet espace devienne un lieu d'échange et d’entraide, où chaque plat peut évoluer et s’enrichir grâce à vos idées et expériences.
+                    Sur notre blog, vous trouverez des recettes simples et gourmandes pour toutes les occasions : des plats rapides pour les soirs de semaine, des douceurs pour le goûter, et même des recettes festives pour les grandes occasions. Nous vous accompagnerons pas à pas avec des conseils pratiques et des astuces pour réussir vos plats.
                     <br><br>
-                    Que vous soyez un chef débutant ou un cuisinier aguerri, notre objectif est de vous donner envie d'enfiler votre tablier et de passer un bon moment dans votre cuisine !
+                    Et ce n’est pas tout : chaque recette est interactive ! Vous pouvez laisser un commentaire pour partager votre avis, vos idées ou vos variantes, ou simplement nous dire combien vous avez apprécié une recette. Nous espérons que cet espace deviendra un lieu d’échange chaleureux où chacun pourra enrichir et s’inspirer.
                     <br><br>
-                    Alors, préparez vos ustensiles et venez partager cette aventure culinaire avec nous. Ensemble, mettons un peu de chaleur et de saveurs dans chaque plat. Bienvenue dans notre univers, où chaque recette est un clin d’œil à notre histoire et à l’amour que nous portons à la cuisine !
+                    Que vous soyez un cuisinier débutant ou aguerri, notre objectif est de vous donner envie d’enfiler votre tablier et de passer un bon moment en cuisine, en famille ou entre amis.
+                    <br><br>
+                    Alors, sortez vos ustensiles et venez partager cette belle aventure culinaire avec nous. Ensemble, mettons un peu de magie et de saveurs dans chaque plat. Bienvenue dans notre univers, où chaque recette est une petite histoire d’amour pour la cuisine et pour les souvenirs qu’elle crée !
                 </span>
             </h5>
             <div class="d-flex justify-content-center mt-4">

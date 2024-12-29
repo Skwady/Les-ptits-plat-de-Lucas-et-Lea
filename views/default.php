@@ -11,17 +11,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/default.css">
     <link href="https://fonts.googleapis.com/css2?family=Macondo&display=swap" rel="stylesheet">
-    <?php if (isset($link)):?> <link rel="stylesheet" href="/assets/css/<?= $link ?>.css"><?php endif; ?>
-    <?php if (isset($links)):?> <link rel="stylesheet" href="/assets/css/<?= $links ?>.css"><?php endif; ?>
-    <title><?php if (isset($title)) {echo $title;} ?></title>
+    <?php if (isset($link)): ?>
+        <link rel="stylesheet" href="/assets/css/<?= $link ?>.css"><?php endif; ?>
+    <?php if (isset($links)): ?>
+        <link rel="stylesheet" href="/assets/css/<?= $links ?>.css"><?php endif; ?>
+    <title><?php if (isset($title)) {
+                echo $title;
+            } ?></title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg bg-gradiant">
         <div class="container-fluid">
             <a class="navbar-brand logo d-block" href="/"><img src="/assets/img/logoNav.png" alt="LOGO"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
-            aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -95,28 +99,29 @@
                         </a>
                     </li>
                     </li>
-                    <?php if(isset($_SESSION['id'])): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/profile/viewProfile/<?= $_SESSION['id'] ?>">
-                            <h4>Profil</h4>
-                        </a>
-                    </li>
-                    
+                    <?php if (isset($_SESSION['id'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile/viewProfile/<?= $_SESSION['id'] ?>">
+                                <h4>Profil</h4>
+                            </a>
+                        </li>
+
                     <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">
-                            <h4>Connexion</h4>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">
+                                <h4>Connexion</h4>
+                            </a>
+                        </li>
                     <?php endif; ?>
 
-                    <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Admin'): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="recettesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <h4>recette</h4>
+                                <h4>Admin</h4>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="recettesDropdown">
                                 <li><a class="dropdown-item" href="/recipes/addRecipe">Ajouter une recette</a></li>
+                                <li><a class="dropdown-item" href="/listUsers">Liste des utilisateurs</a></li>
                             </ul>
                         </li>
                     <?php endif; ?>
@@ -133,94 +138,109 @@
         <div>
             <h3 class="text-center tw">&copy Copyright</h3>
         </div>
-    <!-- Lien pour ouvrir la modal -->
-    <a class="tw" href="#" data-bs-toggle="modal" data-bs-target="#legalModal">Voir les CGU, Mentions légales et RGPD</a>
+        <!-- Lien pour ouvrir la modal -->
+        <a class="tw" href="#" data-bs-toggle="modal" data-bs-target="#legalModal">Voir les CGU, Mentions légales et RGPD</a>
 
-    <!-- Modal -->
-    <div class="modal fade" id="legalModal" tabindex="-1" aria-labelledby="legalModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title tb" id="legalModalLabel">Informations légales</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Navigation avec onglets -->
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="cgu-tab" data-bs-toggle="tab" data-bs-target="#cgu" type="button" role="tab" aria-controls="cgu" aria-selected="true">
-                                CGU
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="mentions-tab" data-bs-toggle="tab" data-bs-target="#mentions" type="button" role="tab" aria-controls="mentions" aria-selected="false">
-                                Mentions Légales
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="rgpd-tab" data-bs-toggle="tab" data-bs-target="#rgpd" type="button" role="tab" aria-controls="rgpd" aria-selected="false">
-                                RGPD
-                            </button>
-                        </li>
-                    </ul>
+        <!-- Modal -->
+        <div class="modal fade" id="legalModal" tabindex="-1" aria-labelledby="legalModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title tb" id="legalModalLabel">Informations légales</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Navigation avec onglets -->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="cgu-tab" data-bs-toggle="tab" data-bs-target="#cgu" type="button" role="tab" aria-controls="cgu" aria-selected="true">
+                                    CGU
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="mentions-tab" data-bs-toggle="tab" data-bs-target="#mentions" type="button" role="tab" aria-controls="mentions" aria-selected="false">
+                                    Mentions Légales
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="rgpd-tab" data-bs-toggle="tab" data-bs-target="#rgpd" type="button" role="tab" aria-controls="rgpd" aria-selected="false">
+                                    RGPD
+                                </button>
+                            </li>
+                        </ul>
 
-                    <!-- Contenu des onglets -->
-                    <div class="tab-content mt-3" id="myTabContent">
-                        <!-- CGU -->
-                        <div class="tab-pane fade show active tb" id="cgu" role="tabpanel" aria-labelledby="cgu-tab">
-                            <h6 class="tb">Conditions Générales d'Utilisation</h6>
-                            <p class="tb">
-                                Bienvenue sur notre site de petits plats ! En utilisant ce site, vous acceptez les conditions suivantes :
-                            </p>
-                            <ul>
-                                <li class="tb">Les informations fournies sur ce site sont à titre indicatif et peuvent être modifiées à tout moment.</li>
-                                <li class="tb">Vous vous engagez à utiliser le site de manière responsable et à ne pas nuire à son bon fonctionnement.</li>
-                                <li class="tb">Les photos sont non contractuelles.</li>
-                            </ul>
-                            <p class="tb">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
-                        </div>
+                        <!-- Contenu des onglets -->
+                        <div class="tab-content mt-3" id="myTabContent">
+                            <!-- CGU -->
+                            <div class="tab-pane fade show active tb" id="cgu" role="tabpanel" aria-labelledby="cgu-tab">
+                                <h6 class="tb">Conditions Générales d'Utilisation</h6>
+                                <p class="tb">
+                                    Bienvenue sur notre site de petits plats ! En utilisant ce site, vous acceptez les conditions suivantes :
+                                </p>
+                                <ul>
+                                    <li class="tb">Vous vous engagez à utiliser le site de manière respectueuse, sans tenter de le perturber, de l'endommager ou d'y porter préjudice (tentatives de piratage, diffusion de contenu nuisible, etc.).
+                                        Les interactions entre utilisateurs doivent rester courtoises et respectueuses. Tout propos injurieux, discriminatoire ou diffamatoire est strictement interdit.</li>
+                                    <li class="tb">Vous vous engagez à publier uniquement des photos, recettes et commentaires liés à la cuisine et en adéquation avec le thème du blog.
+                                        Les contenus doivent être vos créations ou des contenus que vous avez le droit de partager. La publication de contenus protégés par des droits d'auteur sans autorisation est interdite.
+                                        Les photos ou textes contenant des propos inappropriés, violents ou à caractère pornographique sont strictement prohibés.</li>
+                                    <li class="tb">Chaque utilisateur est responsable du contenu qu’il publie. En cas de non-respect des règles, votre contenu pourra être supprimé sans préavis.
+                                        En cas de violation grave ou répétée, votre compte pourra être supprimé définitivement.</li>
+                                    <li class="tb">Vous êtes invité à commenter de manière constructive et bienveillante.
+                                        Les attaques personnelles, spam ou toute tentative de harcèlement envers d’autres utilisateurs ne seront pas tolérées.</li>
+                                    <li class="tb">Vous vous engagez à ne pas diffuser de données personnelles d’autres utilisateurs sans leur consentement.
+                                        Votre compte est personnel. Le partage de vos identifiants avec des tiers est fortement déconseillé.</li>
+                                    <li class="tb">Toute infraction aux règles énoncées ci-dessus pourra entraîner :
+                                        La suppression du contenu en infraction.
+                                        Une suspension permanente du compte.
+                                        Des actions légales en cas de préjudice grave causé au site ou à d’autres utilisateurs.</li>
+                                    <li class="tb">Les présentes règles sont susceptibles d’évoluer. Vous serez informé des modifications et invité à les accepter pour continuer à utiliser le site.
+                                        Merci de respecter ces règles et de contribuer à faire de ce blog une communauté agréable et passionnée autour de la cuisine. Bon partage et bonne découverte !</li>
+                                    <li class="tb">Les recettes publiées sur ce site sont rédigées avec soin et testées pour garantir leur qualité et leur faisabilité. Cependant, les photos accompagnant ces recettes sont fournies à titre purement illustratif et sont non contractuelles.</li>
+                                </ul>
+                                <p class="tb">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
+                            </div>
 
-                        <!-- Mentions légales -->
-                        <div class="tab-pane fade" id="mentions" role="tabpanel" aria-labelledby="mentions-tab">
-                            <h6 class="tb">Mentions Légales</h6>
-                            <p class="tb">
-                                <strong>Nom du site :</strong>Les p'tits Plats de Lucas et Léa<br>
-                                <strong>Propriétaire :</strong>Y.V.<br>
-                                <strong>Adresse :</strong> Adresse du proprio<br>
-                                <strong>Contact :</strong> contact@petitsplatsgourmands.com<br>
-                                <strong>Hébergeur :</strong> Héroku
-                            </p>
-                        </div>
+                            <!-- Mentions légales -->
+                            <div class="tab-pane fade" id="mentions" role="tabpanel" aria-labelledby="mentions-tab">
+                                <h6 class="tb">Mentions Légales</h6>
+                                <p class="tb">
+                                    <strong>Nom du site :</strong>Les p'tits Plats de Lucas et Léa<br>
+                                    <strong>Propriétaire :</strong>Y.V.<br>
+                                    <strong>Adresse :</strong> Adresse du proprio<br>
+                                    <strong>Contact :</strong> contact@petitsplatsgourmands.com<br>
+                                    <strong>Hébergeur :</strong> Héroku
+                                </p>
+                            </div>
 
-                        <!-- RGPD -->
-                        <div class="tab-pane fade" id="rgpd" role="tabpanel" aria-labelledby="rgpd-tab">
-                            <h6 class="tb">Règlement Général sur la Protection des Données (RGPD)</h6>
-                            <p class="tb">
-                                Nous respectons votre vie privée. Les données collectées sur ce site (exemple : formulaire de contact) sont utilisées uniquement pour répondre à vos demandes ou améliorer nos services.
-                            </p>
-                            <p class="tb">
-                                <strong>Données collectées :</strong> Nom, prénom, email.<br>
-                                <strong>Finalité :</strong> Répondre aux demandes des utilisateurs.<br>
-                                <strong>Durée de conservation :</strong> 1 an après la dernière interaction.
-                            </p>
-                            <p class="tb">
-                                Vous pouvez exercer vos droits (accès, rectification, suppression) en nous contactant à l'adresse suivante : contact@lespetitsplats.com.
-                            </p>
+                            <!-- RGPD -->
+                            <div class="tab-pane fade" id="rgpd" role="tabpanel" aria-labelledby="rgpd-tab">
+                                <h6 class="tb">Règlement Général sur la Protection des Données (RGPD)</h6>
+                                <p class="tb">
+                                    Nous respectons votre vie privée. Les données collectées sur ce site (exemple : formulaire de contact) sont utilisées uniquement pour répondre à vos demandes ou améliorer nos services.
+                                </p>
+                                <p class="tb">
+                                    <strong>Données collectées :</strong> Nom, prénom, email.<br>
+                                    <strong>Finalité :</strong> Répondre aux demandes des utilisateurs.<br>
+                                    <strong>Durée de conservation :</strong> 1 an après la dernière interaction.
+                                </p>
+                                <p class="tb">
+                                    Vous pouvez exercer vos droits (accès, rectification, suppression) en nous contactant à l'adresse suivante : contact@lespetitsplats.com.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </footer>
     <?php if (isset($script)) : ?>
-    <script src=" <?= '/assets/js/'.$script.'.js' ?>"></script>
+        <script src=" <?= '/assets/js/' . $script . '.js' ?>"></script>
     <?php endif; ?>
     <?php if (isset($scripts)) : ?>
-    <script src="<?= '/assets/js/'.$scripts.'.js' ?>"></script>
+        <script src="<?= '/assets/js/' . $scripts . '.js' ?>"></script>
     <?php endif; ?>
     <script src="/assets/js/fetchPost.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

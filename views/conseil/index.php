@@ -19,7 +19,7 @@ $title = "Conseils et astuces";
         <div class="col-md-6 mb-4">
             <div class="advice-box p-4 shadow-sm bg-gradiant tw">
                 <p class="mb-3">
-                    "Chez nous, la cuisine, c'est tout sauf une science exacte ! On vous le promet : pas besoin de suivre les recettes à la lettre. Improv, c'est notre meilleure amie. Un peu de sel, beaucoup de fou rire, et si ça déborde... ce sera un bon souvenir ! Alors, oubliez les dogmes précis et suivez nos conseils : avec un peu de chance, ça finira peut-être même comestible !"
+                    "Chez nous, la cuisine, c'est tout sauf une science exacte ! On vous le promet : pas besoin de suivre les recettes à la lettre. L'impro, c'est notre meilleure amie. Un peu de sel, beaucoup de fou rire, et si ça déborde... ce sera un bon souvenir ! Alors, oubliez les règles strictes et suivez nos conseils : avec un peu de chance, ça finira peut-être même par être comestible !"
                 </p>
                 <p class="text-end fw-bold">— Lucas</p>
             </div>
@@ -38,7 +38,7 @@ $title = "Conseils et astuces";
     <div class="text-center mb-5 tw bg-gradiant w-50 mx-auto p-5">
         <h2 class="parisienne-regular-title">Les fruits et légumes de saisons</h2>
     </div>
-    
+
     <div class="row text-center">
         <div class="col-md-6 mb-4">
             <img src="/assets/img/légumesDePrintemps.png" alt="Légumes du Printemps" class="img-fluid rounded-circle shadow section-image">
@@ -57,7 +57,7 @@ $title = "Conseils et astuces";
                     <li>Le Radis</li>
                     <li>Le Navet</li>
                     <li>La pomme de terre nouvelle</li>
-                </ul>  
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
@@ -72,13 +72,13 @@ $title = "Conseils et astuces";
                     <li>Le Pamplemousse</li>
                     <li>Le Citron</li>
                     <li>La Pomme (fin de saison)</li>
-                </ul> 
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <img src="/assets/img/légumesDété.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes d’Eté !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes d’Eté !</h2>
                 <ul class="list-unstyled">
                     <li>L’Aubergine</li>
                     <li>La Blette</li>
@@ -92,13 +92,13 @@ $title = "Conseils et astuces";
                     <li>Le Poivron</li>
                     <li>la Pomme de terre</li>
                     <li>Le Radis</li>
-                </ul> 
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <img src="/assets/img/fruitsDété.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant2 tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Eté !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Eté !</h2>
                 <ul class="list-unstyled">
                     <li>L’ Abricot
                     <li>Le Melon</li>
@@ -113,34 +113,47 @@ $title = "Conseils et astuces";
                     <li>La Prune</li>
                     <li>La Figue (fin d'été)</li>
                     <li>Le Raisin (fin d'été)</li>
-                </ul> 
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <img src="/assets/img/légumesDautomne.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes de l’Automne !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes de l’Automne !</h2>
                 <ul class="list-unstyled">
-                    <li>La Betterave<li>
-                    <li>Le Brocoli<li>
-                    <li>La Carotte<li>
-                    <li>Le Céleri<li>
-                    <li>Le Chou (de Bruxelles, chinois, rouge, vert)<li>
-                    <li>La Citrouille<li>
-                    <li>La Courge<li>
-                    <li>Le Cresson<li>
-                    <li>L’Épinard<li>
-                    <li>Le Navet<li>
-                    <li>Le Panais<li>
-                    <li>Le Potiron<li>
-                    <li>Le Topinambour<li>
-                </ul> 
+                    <li>La Betterave
+                    <li>
+                    <li>Le Brocoli
+                    <li>
+                    <li>La Carotte
+                    <li>
+                    <li>Le Céleri
+                    <li>
+                    <li>Le Chou (de Bruxelles, chinois, rouge, vert)
+                    <li>
+                    <li>La Citrouille
+                    <li>
+                    <li>La Courge
+                    <li>
+                    <li>Le Cresson
+                    <li>
+                    <li>L’Épinard
+                    <li>
+                    <li>Le Navet
+                    <li>
+                    <li>Le Panais
+                    <li>
+                    <li>Le Potiron
+                    <li>
+                    <li>Le Topinambour
+                    <li>
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <img src="/assets/img/fruitsDautomne.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant2 tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits de l’Automne !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits de l’Automne !</h2>
                 <ul class="list-unstyled">
                     <li>La Pomme</li>
                     <li>La Poire</li>
@@ -152,13 +165,13 @@ $title = "Conseils et astuces";
                     <li>Le Coing</li>
                     <li>Le Kaki</li>
                     <li>La Canneberge</li>
-                </ul> 
+                </ul>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <img src="/assets/img/légumesDhivers.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes d’Hiver !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes d’Hiver !</h2>
                 <ul class="list-unstyled">
                     <li>La Blette</li>
                     <li>La Carotte</li>
@@ -178,7 +191,7 @@ $title = "Conseils et astuces";
         <div class="col-md-6 mb-4">
             <img src="/assets/img/fruitsDhivers.png" alt="Fruits du Printemps" class="img-fluid rounded-circle shadow section-image">
             <div class="bg-gradiant2 tw">
-               <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Hiver !</h2>
+                <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Hiver !</h2>
                 <ul class="list-unstyled">
                     <li>La Clémentine
                     <li>L’Orange</li>
@@ -192,7 +205,7 @@ $title = "Conseils et astuces";
                     <li>Le Litchi</li>
                     <li>L’Ananas</li>
                     <li>La Banane (importée, disponible toute l'année)</li>
-                </ul> 
+                </ul>
             </div>
         </div>
     </div>
