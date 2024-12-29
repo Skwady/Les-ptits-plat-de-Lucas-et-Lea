@@ -73,7 +73,27 @@ class RegisterService
                 Merci pour votre inscription.<br>
                 Veuillez cliquer sur le lien ci-dessous pour confirmer votre adresse email :<br>
                 <br>
-                <a href='$confirmationLink'>Confirmer mon email</a>";
+                <a href='$confirmationLink'>Confirmer mon email</a>
+                <ul>
+                    <li>En cliquant sur ce lien, vous vous engagez à utiliser le site de manière respectueuse, sans tenter de le perturber, de l'endommager ou d'y porter préjudice (tentatives de piratage, diffusion de contenu nuisible, etc.).
+                        Les interactions entre utilisateurs doivent rester courtoises et respectueuses. Tout propos injurieux, discriminatoire ou diffamatoire est strictement interdit.</li>
+                    <li>Vous vous engagez à publier uniquement des photos, recettes et commentaires liés à la cuisine et en adéquation avec le thème du blog.
+                        Les contenus doivent être vos créations ou des contenus que vous avez le droit de partager. La publication de contenus protégés par des droits d'auteur sans autorisation est interdite.
+                        Les photos ou textes contenant des propos inappropriés, violents ou à caractère pornographique sont strictement prohibés.</li>
+                    <li>Chaque utilisateur est responsable du contenu qu’il publie. En cas de non-respect des règles, votre contenu pourra être supprimé sans préavis.
+                        En cas de violation grave ou répétée, votre compte pourra être supprimé définitivement.</li>
+                    <li>Vous êtes invité à commenter de manière constructive et bienveillante.
+                        Les attaques personnelles, spam ou toute tentative de harcèlement envers d’autres utilisateurs ne seront pas tolérées.</li>
+                    <li>Vous vous engagez à ne pas diffuser de données personnelles d’autres utilisateurs sans leur consentement.
+                        Votre compte est personnel. Le partage de vos identifiants avec des tiers est fortement déconseillé.</li>
+                    <li>Toute infraction aux règles énoncées ci-dessus pourra entraîner :
+                        La suppression du contenu en infraction.
+                        Une suspension permanente du compte.
+                        Des actions légales en cas de préjudice grave causé au site ou à d’autres utilisateurs.</li>
+                    <li>Les présentes règles sont susceptibles d’évoluer. Vous serez informé des modifications et invité à les accepter pour continuer à utiliser le site.
+                        Merci de respecter ces règles et de contribuer à faire de ce blog une communauté agréable et passionnée autour de la cuisine. Bon partage et bonne découverte !</li>
+                    <li>Les recettes publiées sur ce site sont rédigées avec soin et testées pour garantir leur qualité et leur faisabilité. Cependant, les photos accompagnant ces recettes sont fournies à titre purement illustratif et sont non contractuelles.</li>
+                </ul>";
 
             $emailService = new EmailService();
             $emailService->sendEmail($to, $Subject, $Body);
