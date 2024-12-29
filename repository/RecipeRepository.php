@@ -25,7 +25,8 @@ class RecipeRepository extends BaseRepository
             LEFT JOIN comments c ON c.recipe_id = r.id
             LEFT JOIN type t ON t.id = r.type_id
             WHERE r.type_id = :type
-            GROUP BY r.id';
+            GROUP BY r.id
+            ORDER BY r.id DESC';
         return $this->req($sql, ['type' => $type])->fetchAll();
     }
 

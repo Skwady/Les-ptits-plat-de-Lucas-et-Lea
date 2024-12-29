@@ -6,6 +6,7 @@ use App\repository\ActivityRepository;
 use App\repository\ProfileRepository;
 use App\repository\FavoriteRepository;
 use App\repository\RecipeRepository;
+use App\repository\UsersRepository;
 use App\services\ActivityService;
 use App\services\CloudinaryService;
 use App\services\ProfileService;
@@ -25,17 +26,34 @@ class ProfileController extends Controller
         $activities = $activityRepository->findBy('actu', [], [
             'sort' => ['created_at' => 1],
         ]);
-
+        
         $profilerepository = new ProfileRepository();
         $profile = $profilerepository->selectProfileByUserId($userId);
 
+        $UserRepository = new UsersRepository();
+        foreach ($activities as $activity){
+                    $names = $UserRepository->findBy(['id' => $activity->user_id]);
+                    foreach ($names as $name){
+                        $name = $name->name;
+                    }
+                }
+
         if (isset($_SESSION['id'])) {
             // Rendre la vue du profil avec les activités
-            $this->renderProfile('actu/activity', [
-                'activities' => $activities,
-                'user_id' => $userId,
-                'profile' => $profile
-            ]);
+            if(isset($name)){
+                $this->renderProfile('actu/activity', [
+                    'name' => $name,
+                    'activities' => $activities,
+                    'user_id' => $userId,
+                    'profile' => $profile
+                ]);
+            } else if(!isset($name)){
+                $this->renderProfile('actu/activity', [
+                    'activities' => $activities,
+                    'user_id' => $userId,
+                    'profile' => $profile
+                ]);
+            }
         } else {
             http_response_code(404);
         }
@@ -100,37 +118,13 @@ class ProfileController extends Controller
         header('Content-Type: application/json');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $message = $_POST['message'] ?? null;
-            $imageUrl = null;
-
-            // Vérifier si un message est fourni
-            if (empty($message)) {
-                echo json_encode(['status' => 'error', 'message' => 'Le message ne peut pas être vide']);
-                exit();
-            }
-
-            // Vérifier et uploader l'image si présente
-            if (!empty($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $cloudinaryService = new CloudinaryService();
-                $imageUrl = $cloudinaryService->validateAndUploadImage($_FILES['image']);
-
-                // Si l'upload échoue
-                if (!$imageUrl) {
-                    echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'upload de l\'image']);
-                    exit();
-                }
-            }
-
-            // Publier le message via le service
             $activityService = new ActivityService();
-            $result = $activityService->publishMessage($_SESSION['id'], $message, $imageUrl);
-
-            echo json_encode($result);
+            $activityService->publishMessage();
             exit();
         }
 
         echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée']);
-        exit();
+        exit(); 
     }
 
     public function updateProfile($userId)
@@ -167,5 +161,18 @@ class ProfileController extends Controller
         } else {
             http_response_code(404);
         }
+    }
+
+    public function deleteComment()
+    {
+        header('Content-Type: application/json');
+
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            $activityService = new ActivityService();
+            $activityService->deleteComment();
+        }
+
+        echo json_encode(['status' => 'error', 'message' => 'Méthode non autorisée.']);
+        exit();
     }
 }

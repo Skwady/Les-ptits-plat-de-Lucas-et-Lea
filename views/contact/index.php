@@ -11,7 +11,7 @@ $title = "Contact";
         
         <div class="row mt-5 contact-form align-items-center">
             <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4 mb-md-0">
-                <img src="/assets/img/lucas.png" alt="Photo de Lucas" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                <img src="/assets/img/contact_lucas.webp" alt="Photo de Lucas" class="img-fluid rounded" style="max-width: 100%; height: auto;">
             </div>
             <div class="col-lg-8 col-md-6 col-sm-12 lui">
                 <form class="w-100">
@@ -46,7 +46,7 @@ $title = "Contact";
 
         <div class="row mt-5 contact-form align-items-center">
             <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4 mb-md-0">
-                <img src="/assets/img/lea.png" alt="Photo de Léa" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+                <img src="/assets/img/contact_lea.webp" alt="Photo de Léa" class="img-fluid rounded" style="max-width: 100%; height: auto;">
             </div>
             <div class="col-lg-8 col-md-6 col-sm-12 elle">
                 <form class="w-100">
@@ -88,13 +88,13 @@ $title = "Contact";
         <h3>Ils l'ont fait, alors n'hésitez plus : Rejoignez-nous !</h3>
         <div class="row justify-content-center">
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <img src="/assets/img/user1.png" alt="Invité 1" class="img-fluid testimonials img-thumbnail mx-auto">
+                <img src="/assets/img/blog1.webp" alt="Invité 1" class="img-fluid testimonials img-thumbnail mx-auto">
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <img src="/assets/img/user2.png" alt="Invité 2" class="img-fluid testimonials img-thumbnail mx-auto">
+                <img src="/assets/img/blog2.webp" alt="Invité 2" class="img-fluid testimonials img-thumbnail mx-auto">
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <img src="/assets/img/user3.png" alt="Invité 3" class="img-fluid testimonials img-thumbnail mx-auto">
+                <img src="/assets/img/blog3.webp" alt="Invité 3" class="img-fluid testimonials img-thumbnail mx-auto">
             </div>
         </div>
     </div>

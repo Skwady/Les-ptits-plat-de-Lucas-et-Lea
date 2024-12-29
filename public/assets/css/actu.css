@@ -25,7 +25,6 @@ body {
 
 /* Barre de publication */
 textarea {
-    resize: none;
     min-height: 50px;
 }
 
@@ -55,4 +54,14 @@ textarea {
     max-width: 500px;
     max-height: 200px;
     overflow-y: auto; /* Permet un défilement si nécessaire */
+}
+
+.delete-comment {
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-comment:hover {
+    color: darkred;
 }

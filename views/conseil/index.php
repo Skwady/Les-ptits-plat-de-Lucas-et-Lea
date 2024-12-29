@@ -7,7 +7,7 @@ $title = "Conseils et astuces";
     <!-- Section Header -->
     <div class="text-center mb-5 d-flex align-items-center justify-content-evenly gap-3 flex-wrap">
         <div>
-            <img src="/assets/img/coupleCooking.png" alt="Lucas et Léa" class="img-fluid shadow header-image">
+            <img src="/assets/img/conseil_et_astuces.webp" alt="Lucas et Léa" class="img-fluid shadow header-image">
         </div>
         <div class="bg-gradiant circle">
             <h1 class="tw mt-4 parisienne-regular-title">Les conseils et<br> astuces de<br> Lucas et Léa !</h1>

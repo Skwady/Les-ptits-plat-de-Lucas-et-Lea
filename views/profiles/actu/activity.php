@@ -3,24 +3,37 @@ $link = 'actu';
 $title = 'Fil d\'actualité';
 ?>
 
-<section class="container d-flex justify-content-center mt-5 h-100">
-    <div class="col-12 col-md-12">
-
-        <!-- Liste des activités -->
+<section>
+    <div>
         <section class="activities mb-5 w-50" data-refresh-url="/profile/activities<?= $_SESSION['id'] ?>">
             <ul class="list-group">
-            <?php foreach ($activities as $activity): ?>
-                <li class="list-group-item mb-3">
-                    <p><strong>Nom: </strong><?= $profile->name; ?></p>
-                    <p><?= $activity['message'] ?? ''; ?></p>
-                    <?php if (!empty($activity->image_url)): ?>
-                    <div class="mb-3">
-                        <img src="<?= $activity->image_url; ?>" alt="Image associée" class="img-fluid rounded">
-                    </div>
-                    <?php endif; ?>
-                    <small class="text-muted">Publié le : <?= $activity->created_at->toDateTime()->format('d/m/Y H:i:s'); ?></small>
-                </li>
-            <?php endforeach; ?>
+                <?php foreach ($activities as $activity): ?>
+                    <li class="list-group-item mb-3 position-relative">
+                        <p><?= htmlspecialchars($name); ?></p>
+                        <p><?= htmlspecialchars($activity['message'] ?? ''); ?></p>
+                        <?php
+                        $imageUrls = $activity['image_url'] instanceof MongoDB\Model\BSONArray
+                            ? $activity['image_url']->getArrayCopy()
+                            : [];
+                        ?>
+                        <?php if (!empty($imageUrls)): ?>
+                            <div class="mb-3">
+                                <?php foreach ($imageUrls as $image): ?>
+                                    <img src="<?= htmlspecialchars($image); ?>" alt="Image associée" class="img-fluid rounded mb-2">
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <small class="text-muted">
+                            Publié le : <?= $activity['created_at']->toDateTime()->format('d/m/Y H:i:s'); ?>
+                        </small>
+                        <?php if ($activity['user_id'] == $_SESSION['id'] || $_SESSION['role'] === 'Admin'): ?>
+                            <!-- Icône croix -->
+                            <span class="delete-comment position-absolute top-0 end-0 me-2" data-comment-id="<?= $activity['_id']; ?>">
+                                &times;
+                            </span>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </section>
 
@@ -35,7 +48,7 @@ $title = 'Fil d\'actualité';
                         <!-- Icône d'ajout de fichier -->
                         <label for="fileInput" class="btn btn-outline-secondary me-3">
                             <i class="fas fa-paperclip"></i>
-                            <input type="file" name="image" id="fileInput" class="d-none" accept="image/*">
+                            <input type="file" name="image[]" id="fileInput" class="d-none" accept="image/*" multiple>
                         </label>
 
                         <!-- Bouton emoji -->
@@ -62,6 +75,6 @@ $title = 'Fil d\'actualité';
 </section>
 
 <?php
-//Custom JS
 $script = 'actu';
+$scripts = 'deleteComment';
 ?>

@@ -39,7 +39,7 @@ class RegisterService
         // Hydrater et enregistrer l'utilisateur avec le token
         $data = [
             'name' => $name,
-            'firstname' => $firstname,
+            'firstname' => $firstname ?? null,
             'email' => $email,
             'password' => $password,
             'confirmed_token' => $token,

@@ -52,7 +52,7 @@ $title = "Accueil";
 
         <!-- Colonne centrale avec l'image -->
         <div class="text-center my-3">
-            <img src="assets/img/Lucas-et-lea.png" alt="" class="img-fluid">
+            <img src="assets/img/famille_1.webp" alt="" class="img-fluid">
         </div>
 
         <!-- Colonne de droite avec bulle2 en position légèrement haute -->

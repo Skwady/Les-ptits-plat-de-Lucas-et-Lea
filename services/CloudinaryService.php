@@ -30,16 +30,26 @@ class CloudinaryService
      * @param string $file The file to upload.
      * @return string|false Returns the secure URL of the uploaded image, or false on failure.
      */
+    public function validateAndUploadImage(array $file): ?string
+    {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+        if (isset($file['tmp_name']) && in_array($file['type'], $allowedTypes)) {
+            return $this->uploadFile($file['tmp_name']);
+        }
+        return null;
+    }
+
     public function uploadFile($file)
     {
         try {
             $result = $this->cloudinary->uploadApi()->upload($file, [
                 "folder" => "Les_ptits_plats/"
             ]);
-            return $result['secure_url'];
+            return $result['secure_url']; // Retourner l'URL sécurisée
         } catch (\Exception $e) {
             error_log("Cloudinary upload error: " . $e->getMessage());
-            return false;
+            return false; // Retourner false en cas d'erreur
         }
     }
 
@@ -64,18 +74,5 @@ class CloudinaryService
     {
         $path_parts = pathinfo($url);
         return substr($path_parts['basename'], 0, strpos($path_parts['basename'], '.'));
-    }
-
-    public function validateAndUploadImage($image): ?string
-    {
-        if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
-
-            if (in_array($image['type'], $allowedTypes)) {
-                $cloudinaryService = new CloudinaryService();
-                return $cloudinaryService->uploadFile($image['tmp_name']);
-            }
-        }
-        return null;
     }
 }

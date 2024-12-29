@@ -15,8 +15,10 @@
             <!-- Email -->
             <p><strong>Email :</strong> <?= $profile->email ?></p>
             <!-- Date de naissance (affichée uniquement si disponible) -->
-            <?php if (!empty($profile->date_of_birth)): ?>
-                <p><strong>Date de naissance :</strong> <?= $profile->date_of_birth ?></p>
+            <?php if (!empty($profile->date_of_birth)): 
+                $date = new DateTime($profile->date_of_birth);
+            ?>
+                <p><strong>Date de naissance :</strong> <?= $date->format('d/m/Y'); ?></p>
             <?php endif; ?>
             <!-- Bio (affichée uniquement si disponible) -->
             <?php if (!empty($profile->bio)): ?>

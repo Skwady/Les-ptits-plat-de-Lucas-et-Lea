@@ -20,7 +20,8 @@
     <nav class="navbar navbar-expand-lg bg-gradiant">
         <div class="container-fluid">
             <a class="navbar-brand logo d-block" href="/"><img src="/assets/img/logoNav.png" alt="LOGO"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
+            aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -174,7 +175,7 @@
                             <ul>
                                 <li class="tb">Les informations fournies sur ce site sont à titre indicatif et peuvent être modifiées à tout moment.</li>
                                 <li class="tb">Vous vous engagez à utiliser le site de manière responsable et à ne pas nuire à son bon fonctionnement.</li>
-                                <li class="tb">Les photos et descriptions des plats sont non contractuelles.</li>
+                                <li class="tb">Les photos sont non contractuelles.</li>
                             </ul>
                             <p class="tb">Merci de respecter ces règles pour garantir une expérience agréable à tous.</p>
                         </div>
