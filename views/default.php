@@ -210,7 +210,7 @@
                                     <strong>Contact :</strong> contact@petitsplatsgourmands.com<br>
                                     <strong>Hébergeur :</strong> Héroku
                                 </p>
-                            </div>
+                            </div> 
 
                             <!-- RGPD -->
                             <div class="tab-pane fade" id="rgpd" role="tabpanel" aria-labelledby="rgpd-tab">
