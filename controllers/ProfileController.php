@@ -32,11 +32,12 @@ class ProfileController extends Controller
 
         $UserRepository = new UsersRepository();
         foreach ($activities as $activity){
-                    $names = $UserRepository->findBy(['id' => $activity->user_id]);
-                    foreach ($names as $name){
-                        $name = $name->name;
-                    }
-                }
+            $names = $UserRepository->findBy(['id' => $activity->user_id]);
+            
+            foreach ($names as $name){
+                $name = $name->name;
+            }
+        }
 
         if (isset($_SESSION['id']) && $_SESSION['id'] == $userId) {
             // Rendre la vue du profil avec les activités

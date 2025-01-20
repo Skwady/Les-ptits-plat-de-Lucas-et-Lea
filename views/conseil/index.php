@@ -100,7 +100,7 @@ $title = "Conseils et astuces";
             <div class="bg-gradiant2 tw">
                 <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Eté !</h2>
                 <ul class="list-unstyled">
-                    <li>L’ Abricot
+                    <li>L’ Abricot</li>
                     <li>Le Melon</li>
                     <li>La Pastèque</li>
                     <li>La Pêche</li>
@@ -121,32 +121,19 @@ $title = "Conseils et astuces";
             <div class="bg-gradiant tw">
                 <h2 class="mt-3 pt-2 parisienne-regular-title">Les légumes de l’Automne !</h2>
                 <ul class="list-unstyled">
-                    <li>La Betterave
-                    <li>
-                    <li>Le Brocoli
-                    <li>
-                    <li>La Carotte
-                    <li>
-                    <li>Le Céleri
-                    <li>
-                    <li>Le Chou (de Bruxelles, chinois, rouge, vert)
-                    <li>
-                    <li>La Citrouille
-                    <li>
-                    <li>La Courge
-                    <li>
-                    <li>Le Cresson
-                    <li>
-                    <li>L’Épinard
-                    <li>
-                    <li>Le Navet
-                    <li>
-                    <li>Le Panais
-                    <li>
-                    <li>Le Potiron
-                    <li>
-                    <li>Le Topinambour
-                    <li>
+                    <li>La Betterave</li>
+                    <li>Le Brocoli</li>
+                    <li>La Carotte</li>
+                    <li>Le Céleri</li>
+                    <li>Le Chou (de Bruxelles, chinois, rouge, vert)</li>
+                    <li>La Citrouille</li>
+                    <li>La Courge</li>
+                    <li>Le Cresson</li>
+                    <li>L’Épinard</li>
+                    <li>Le Navet</li>
+                    <li>Le Panais</li>
+                    <li>Le Potiron</li>
+                    <li>Le Topinambour</li>
                 </ul>
             </div>
         </div>
@@ -193,7 +180,7 @@ $title = "Conseils et astuces";
             <div class="bg-gradiant2 tw">
                 <h2 class="mt-3 pt-2 parisienne-regular-title">Les fruits d’Hiver !</h2>
                 <ul class="list-unstyled">
-                    <li>La Clémentine
+                    <li>La Clémentine</li>
                     <li>L’Orange</li>
                     <li>La Mandarine</li>
                     <li>Le Pamplemousse</li>

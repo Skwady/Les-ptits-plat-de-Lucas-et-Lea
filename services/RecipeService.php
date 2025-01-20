@@ -61,7 +61,6 @@ class RecipeService
     public function UpdateRecipe($recipeId, $data)
     {
         $reciperepository = new RecipeRepository();
-        $recipeRepository = new RecipeRepository();
         $cloudinaryService = new CloudinaryService();
         $recipeModel = new RecipeModel();
 

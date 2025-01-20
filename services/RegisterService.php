@@ -11,7 +11,6 @@ class RegisterService
 {
     public function register()
     {
-        header('Content-Type: application/json');
         $name = $_POST['name'];
         $firstname = $_POST['firstname'];
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -46,6 +45,7 @@ class RegisterService
             'is_confirmed' => 0,
             'id_role' => $id_role
         ];
+        
         $UsersModel = new UsersModel();
         $UsersModel->hydrate($data);
         if ($UsersModel = (new UsersRepository())->create($data)) {
