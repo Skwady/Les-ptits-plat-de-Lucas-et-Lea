@@ -24,9 +24,10 @@ $title = 'Login';
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <button type="submit" id="submit" class="btn bg-gradiant2 tw border w-50">Connexion</button> 
             </div>
+            <div id="error-message" class="alert alert-danger" role="alert"></div>
+            <div id="success-message" class="alert alert-success" role="alert"></div>
         </form>
         <a href="/login/register" class="tw">Pas encore inscrit ?</a>
-        <div id="error-message" class="alert alert-danger" role="alert"></div>
     </div>    
 </section>
 

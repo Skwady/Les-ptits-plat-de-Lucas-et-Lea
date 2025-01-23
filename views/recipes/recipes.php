@@ -92,6 +92,7 @@ $title = 'Liste des Recettes';
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <button type="submit" class="btn mt-1">Envoyer</button>
                             <div id="error-message" class="alert alert-danger" role="alert"></div>
+                            <div id="success-message" class="alert alert-success" role="alert"></div>
                         </form>
                     <?php endif; ?>
                 </div>

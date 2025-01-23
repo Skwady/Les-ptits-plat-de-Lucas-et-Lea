@@ -33,7 +33,8 @@ $title = 'Register';
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <button type="submit" id="submit" class="btn bg-gradiant2 tw border w-50">Inscription</button> 
             </div>
+            <div id="error-message" class="alert alert-danger" role="alert"></div>
+            <div id="success-message" class="alert alert-success" role="alert"></div>
         </form>
-        <div class="my-3" id="error-message" style="color: red;"></div>
     </div>    
 </section>

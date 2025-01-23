@@ -71,6 +71,7 @@ $title = 'Fil d\'actualité';
                 </form>
             </div>
             <div id="error-message" class="alert alert-danger" role="alert"></div>
+            <div id="success-message" class="alert alert-success" role="alert"></div>
         </section>
     </div>
 </section>

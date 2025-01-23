@@ -64,4 +64,5 @@ $title = 'Ajouter une Recette';
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <button type="submit" class="btn btn-primary mb-4">Soumettre la recette</button>
 </form>
-<div id="error-message" class="alert alert-danger mt-4 mb-4" role="alert"></div>
+<div id="error-message" class="alert alert-danger" role="alert"></div>
+<div id="success-message" class="alert alert-success" role="alert"></div>

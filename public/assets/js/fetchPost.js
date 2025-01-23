@@ -3,8 +3,7 @@ document.querySelectorAll('form').forEach(function(form) {
         e.preventDefault(); 
 
         let data = new FormData(this); 
-        let action = this.action; 
-        let target = this.getAttribute('data-target');
+        let action = this.action;
 
         fetch(action, {
             method: 'POST',
@@ -12,26 +11,27 @@ document.querySelectorAll('form').forEach(function(form) {
         })
         .then(function(response) {
             if (response.ok) {
-                return response.json();
+                return response.json().then(jsonResponse => jsonResponse);
             } else {
                 return response.json().then(err => { throw err; });
             }
         })
         .then(function(jsonResponse) {
             // Cacher le message d'erreur en cas de succès
-            const errorMessageContainer = document.getElementById('error-message');
-            errorMessageContainer.style.display = 'none';
+            let errorMessageContainer = document.getElementById('error-message');
+            errorMessageContainer.style.display = 'none'; 
+            let successMessageContainer = document.getElementById('success-message');
+                successMessageContainer.style.display = 'none';
 
             form.reset();
             
             if (jsonResponse.redirect) {
                 window.location.href = jsonResponse.redirect; // Redirection si demandée
             }
-
-            // Rafraîchir la cible si spécifiée
-            if (target) {
-                refreshContent(Target);
-            }
+            if (jsonResponse.status === "success") {
+                successMessageContainer.style.display = 'block';
+                successMessageContainer.textContent = jsonResponse.message;
+            }            
         })
         .catch(function(error) {
             // Afficher l'erreur dans le conteneur d'erreurs
@@ -41,33 +41,3 @@ document.querySelectorAll('form').forEach(function(form) {
         });
     });
 });
-
-// Fonction pour rafraîchir une section cible
-function refreshContent(targetSelector) {
-    const targetElement = document.querySelector(targetSelector);
-
-    if (targetElement) {
-        // URL de rafraîchissement à partir de data-refresh-url
-        const refreshUrl = targetElement.getAttribute('data-refresh-url');
-
-        if (refreshUrl) {
-            fetch(refreshUrl)
-                .then(response => {
-                    if (response.ok) {
-                        return response.text(); // Récupérer le contenu HTML
-                    } else {
-                        throw new Error("Impossible de rafraîchir le contenu.");
-                    }
-                })
-                .then(updatedContent => {
-                    // Mettre à jour le contenu HTML de la section cible
-                    targetElement.innerHTML = updatedContent;
-                })
-                .catch(error => {
-                    console.error("Erreur lors du rafraîchissement :", error);
-                });
-        } else {
-            console.warn(`Aucune URL de rafraîchissement spécifiée pour ${targetSelector}`);
-        }
-    }
-}

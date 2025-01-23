@@ -71,9 +71,8 @@
                     <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>
             </form>
-            <div id="error-message" class="alert alert-danger mt-4 d-none" role="alert">
-                Une erreur est survenue. Veuillez réessayer.
-            </div>
+            <div id="error-message" class="alert alert-danger" role="alert"></div>
+            <div id="success-message" class="alert alert-success" role="alert"></div>
         </div>
     </div>
 </section>

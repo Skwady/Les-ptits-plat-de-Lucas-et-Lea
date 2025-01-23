@@ -31,6 +31,8 @@ $title = "Contact";
                         <label class="form-label">Message</label>
                         <textarea class="form-control" name="message" rows="4"></textarea>
                     </div>
+                    <div id="error-message" class="alert alert-danger" role="alert"></div>
+                    <div id="success-message" class="alert alert-success" role="alert"></div>
                     <button type="submit" class="btn w-100">Envoyer</button>
                 </form>
             </div>
@@ -66,6 +68,8 @@ $title = "Contact";
                         <label class="form-label">Message</label>
                         <textarea class="form-control" name="message" rows="4"></textarea>
                     </div>
+                    <div id="error-message" class="alert alert-danger" role="alert"></div>
+                    <div id="success-message" class="alert alert-success" role="alert"></div>
                     <button type="submit" class="btn w-100">Envoyer</button>
                 </form>
             </div>
@@ -125,6 +129,8 @@ $title = "Contact";
                 <label class="form-label">Email</label>
                 <input type="email" class="form-control" name="email">
             </div>
+            <div id="error-message" class="alert alert-danger" role="alert"></div>
+            <div id="success-message" class="alert alert-success" role="alert"></div>
             <button type="submit" class="btn w-100">S'inscrire</button>
         </form>
     </div>
